@@ -5,11 +5,13 @@
 
 int main(void) {
 
+    // test get string
     printf("output : %s\n", getString("Enter your name"));
 
+    // test get integer
     printf("age is %d\n", getInteger("Enter your age"));
 
-    // Example usage
+    // test get choice
     char* options[] = {
         "Option 1",
         "Option 2",
@@ -19,6 +21,7 @@ int main(void) {
 
     char* choice = getChoice(options, numOptions);
     printf("You selected: %s\n", choice);
+
 
     return 0;
 }
