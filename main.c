@@ -1,27 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "src/header/input.h"
+#include <input.h>
+#include <skill.h>
+#include <passion.h>
 
 
 int main(void) {
 
-    // test get string
-    printf("output : %s\n", getString("Enter your name"));
 
-    // test get integer
-    printf("age is %d\n", getInteger("Enter your age"));
 
-    // test get choice
-    char* options[] = {
-        "Option 1",
-        "Option 2",
-        "Option 3"
-    };
-    int numOptions = 3;
+    char *skill = getSkill();
+    printf("%s\n", skill);
 
-    char* choice = getChoice(options, numOptions);
-    printf("You selected: %s\n", choice);
-
+    char *passion = getPassion();
+    printf("%s\n", passion);
 
     return 0;
 }

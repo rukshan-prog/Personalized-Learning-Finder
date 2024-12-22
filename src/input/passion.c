@@ -1,5 +1,5 @@
 //
-// Created by Rasintha_Rukshan on 22/12/2024.
+// Created by [your name] on [date].
 //
 
 
@@ -8,10 +8,12 @@
 #include <string.h>
 
 
-/* create an array.
- * add 1 or more skill to the array (max 3).
- * use getString, getChoice and getInteger function to get the skill from the user.
- * return the array.
+
+
+/* create an array
+ * add 1 or more passions to the array (max 3)
+ * use getString, getChoice and getInteger function to get the skill from the user
+ * return the array
  */
 
 
@@ -37,8 +39,10 @@ printf("You selected: %s\n", choice);
  *
  */
 
-char* getSkill() {
+
+char* getPassion() {
     // code here
+
 
     return NULL;
 }

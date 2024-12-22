@@ -6,7 +6,7 @@
 #define C_GROUP_PROJECT_INPUT_H
 
 char* getString(char *prompt);
-int getInteger(char *prompt);
+int getInteger(const char *prompt);
 char *getChoice(char *options[], int i);
 
 #endif //C_GROUP_PROJECT_INPUT_H

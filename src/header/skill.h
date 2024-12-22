@@ -1,10 +1,10 @@
 //
-// Created by Rasintha_Rukshan on 19/12/2024.
+// Created by [your name] on [date].
 //
 
 #ifndef C_GROUP_PROJECT_SKILL_H
 #define C_GROUP_PROJECT_SKILL_H
 
-void addSkill();
+char* getSkill();
 
 #endif //C_GROUP_PROJECT_SKILL_H

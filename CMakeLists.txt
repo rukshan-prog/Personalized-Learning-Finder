@@ -10,5 +10,9 @@ add_executable(plf main.c
         src/input/skill.c
         src/header/skill.h
         src/header/input.h
-        src/input/input.c)
+        src/input/input.c
+        database/db.c
+        src/header/passion.h
+        src/input/passion.c
+        src/header/db.h)
 
