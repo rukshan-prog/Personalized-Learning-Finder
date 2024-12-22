@@ -7,7 +7,7 @@
 
 int main(void) {
 
-
+    printf("program start\n");
 
     char** skill = (char **) getSkill();
     for (int i = 0; i < 3; i++) {
@@ -23,6 +23,8 @@ int main(void) {
     // Free dynamically allocated memory
     free(skill);
     free(passion);
+
+    printf("program end\n");
 
     return 0;
 }

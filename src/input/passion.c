@@ -42,12 +42,17 @@ printf("You selected: %s\n", choice);
 // get passion from the user
 char* getPassion() {
 
-    static char* options[] = {};
+    static char* passions[3] = {
+            "passion 1",
+            "passion 2",
+            "passion 3"
+    };
+
     // code here
 
 
 
 
-    return (char *) options;
+    return (char *) passions;
 }
 

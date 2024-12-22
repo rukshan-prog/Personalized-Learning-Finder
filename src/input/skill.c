@@ -41,11 +41,15 @@ printf("You selected: %s\n", choice);
 
 // get skill from the user
 char* getSkill() {
-    static char* options[] = {};
+    static char* skill[3] = {
+            "skill 1",
+            "skill 2",
+            "skill 3"
+    };
     // code here
 
 
 
-    return (char *) options;
+    return (char *) skill;
 }
 
