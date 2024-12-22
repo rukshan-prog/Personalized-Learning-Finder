@@ -7,6 +7,6 @@
 
 char* getString(char *prompt);
 int getInteger(const char *prompt);
-char *getChoice(char *options[], int i);
+char *getChoice(char *options[], int i, char *prompt);
 
 #endif //C_GROUP_PROJECT_INPUT_H

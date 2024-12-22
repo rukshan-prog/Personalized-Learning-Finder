@@ -3,28 +3,32 @@
 #include <input.h>
 #include <skill.h>
 #include <passion.h>
+#include <createUi.h>
 
 
 int main(void) {
 
-    printf("program start\n");
 
-    char** skill = (char **) getSkill();
+
+    /*printf("program start\n");
+
+    Skill *skills = getSkill();
+
     for (int i = 0; i < 3; i++) {
-        printf("%s\n", skill[i]);
+        printf("Skill name: %s\n", skills[i].skillName);
+        printf("Skill level: %s\n", skills[i].level);
     }
 
+    printf("get skill end\n");
 
     char** passion = (char **) getPassion();
     for (int i = 0; i < 3; i++) {
         printf("%s\n", passion[i]);
     }
 
-    // Free dynamically allocated memory
-    free(skill);
-    free(passion);
+    printf("get passion end\n");*/
 
-    printf("program end\n");
+    /*int i = createUi();*/
 
     return 0;
 }

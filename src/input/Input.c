@@ -18,6 +18,8 @@ char* getString(char *prompt) {
             printf("Enter a string: ");
         }
 
+        system("cls");
+
         // Allocate memory for the string length of 100
         str = malloc(100);
 
@@ -89,17 +91,17 @@ int getInteger(const char *prompt) {
 
 
 // Function to get a choice
-char* getChoice(char* options[], int numOptions) {
+char *getChoice(char *options[], int numOptions, char *prompt) {
     if (options == NULL || numOptions <= 0) {
         printf("Error: No options provided.\n");
-        return NULL; // Handle invalid input
+        exit(1); // Handle invalid input
     }
 
     int choice;
 
     while (1) {
         // Display options
-        printf("Please choose from the following options:\n");
+        printf("%s:\n", prompt);
         for (int i = 0; i < numOptions; ++i) {
             if (options[i]) {  // Ensure option string is not NULL
                 printf("%d: %s\n", i + 1, options[i]);
@@ -113,10 +115,11 @@ char* getChoice(char* options[], int numOptions) {
         if (choice >= 0 && choice < numOptions && options[choice] != NULL) {
             break;  // Valid choice, exit loop
         } else {
-            printf("Invalid choice. Please enter a number between 1 and %d.\n", numOptions);
+            printf("Invalid choice.\nPlease enter a number between 1 and %d.\n", numOptions);
         }
     }
 
     return options[choice];  // Return the selected option
 }
+
 

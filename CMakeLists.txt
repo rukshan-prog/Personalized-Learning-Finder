@@ -6,6 +6,7 @@ set(CMAKE_C_STANDARD 11)
 
 include_directories(src/header)
 
+
 add_executable(plf main.c
         src/input/skill.c
         src/header/skill.h
@@ -14,5 +15,7 @@ add_executable(plf main.c
         database/db.c
         src/header/passion.h
         src/input/passion.c
-        src/header/db.h)
+        src/header/db.h
+        src/ui/ui.c
+        src/header/createUi.h)
 
