@@ -8,87 +8,59 @@
 #include <string.h>
 #include <skill.h>
 #include <stdlib.h>
-
-
-/*
- *
-// test for get string
-char *str = getString("Enter a string");
-printf("You entered : %s\n", str);
-
-// test get integer
-int integer = getInteger("Enter a number");
-printf("Your entered : %d\n", integer);
-
-// test get choice
-char* options[] = { // array of options
-        "Option 1",
-        "Option 2",
-        "Option 3"
-};
-int numOptions = 3;  // number of options
-char* choice = getChoice(options, numOptions);
-printf("You selected: %s\n", choice);
- *
- */
-
-
-/* create an array.
- * add 1 or more skill and skill level to the array (max 3).
- * use getString, getChoice and getInteger function to get the skill from the user.
- * return the array.
- */
+#include <color.h>
 
 
 
 
 // get skill from the user
 Skill* getSkill() {
+    char* option[] = {"yes", "no"};
+    Skill* skills;
+    do {
+        // ask the user how many skills they want to add
+        int skillCount = getInteger("Enter the number of skills you want to add");
 
-    int skillCount;
+        printf("\n");
 
-    skillCount = getInteger("Enter the number of skills you want to add");
+        // Allocate memory for dynamic skills
+        skills = malloc(skillCount * sizeof(Skill));
 
-
-    Skill* skills = malloc(skillCount * sizeof(Skill)); // Allocate memory for dynamic skills
-
-    if (!skills) {
-        fprintf(stderr, "Memory allocation failed\n");
-        exit(EXIT_FAILURE);
-    }
-
-    for (int i = 0; i < 3; i++) {
-
-        char* skillName = getString("Enter the skill you want to add");
-
-        char prompt[100];
-        snprintf(prompt, sizeof(prompt), "Enter level of the skill %s", skillName);
-
-        char* levels[3] = {
-                "Beginner",
-                "Intermediate",
-                "Advanced"
-        };
-
-        char* level = getChoice(levels, 3, prompt);
-
-        strcpy(skills[i].skillName, skillName);
-        strcpy(skills[i].level, level);
-        printf("You entered Skill list");
-        for (int j = 0; j < i; ++j) {
-            printf("skill name: %s \t level: %s\n",skills[j].skillName,skills[j].level);
+        // Check if the memory allocation was successful
+        if (!skills) {
+            fprintf(stderr, "Memory allocation failed\n");
+            exit(EXIT_FAILURE);
         }
 
-       /* // ask the user if they want to add another skill
-        char* condition[2] = {
-                "yes",
-                "no"
-        };
+        // Loop to get the skills
+        for (int i = 0; i < 3; i++) {
+            // create the skill name
+            char prompt1[100];
+            snprintf(prompt1, sizeof(prompt1), "Enter skill %d", i + 1);
+            char* skillName = getString(prompt1);
+            system("cls");
+            printf("%sYou entered skill : %s%s\n\n", SUCCESS, skillName, RESET);
+            char prompt2[100];
+            snprintf(prompt2, sizeof(prompt2), "Enter your skill level for %s%s%s", SUCCESS,skillName,RESET);
 
-        if ((strcmp(getChoice(condition, 2, "Do you want to add another skill?"), "no") == 0) ) {
-            break;
-        }*/
-    }
+            char* levels[3] = {
+                    "Beginner",
+                    "Intermediate",
+                    "Advanced"
+            };
+
+            char* level = getChoice(levels, 3, prompt2);
+            system("cls");
+            strcpy(skills[i].skillName, skillName);
+            strcpy(skills[i].level, level);
+            printf(  "%s%s%s\n\n", RESET, "Your Skill list", RESET);
+            printf("%sSkill\t\t\tLevel%s\n", INFO, RESET);
+            for (int j = 0; j < i+1; ++j) {
+                printf("%s%s\t\t\t%s%s\n", RESET, skills[j].skillName, skills[j].level, RESET);
+            }
+            printf("\n");
+        }
+    } while (strcmp(getChoice(option, 2, "Do you want to continue"), "yes") != 0);
 
     return skills;
 }

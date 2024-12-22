@@ -16,6 +16,5 @@ add_executable(plf main.c
         src/header/passion.h
         src/input/passion.c
         src/header/db.h
-        src/ui/ui.c
-        src/header/createUi.h)
+        src/header/color.h)
 
