@@ -8,13 +8,6 @@
 #include <string.h>
 
 
-/* create an array.
- * add 1 or more skill to the array (max 3).
- * use getString, getChoice and getInteger function to get the skill from the user.
- * return the array.
- */
-
-
 /*
  *
 // test for get string
@@ -37,9 +30,22 @@ printf("You selected: %s\n", choice);
  *
  */
 
+
+/* create an array.
+ * add 1 or more skill to the array (max 3).
+ * use getString, getChoice and getInteger function to get the skill from the user.
+ * return the array.
+ */
+
+
+
+// get skill from the user
 char* getSkill() {
+    static char* options[] = {};
     // code here
 
-    return NULL;
+
+
+    return (char *) options;
 }
 
