@@ -10,7 +10,11 @@
 int main(void) {
 
     char *passions = getPassion();
-    Skill *skills = getSkill();
+
+    printf("%s\n", passions);
+
+
+    // Skill *skills = getSkill();
 
     return 0;
 }
