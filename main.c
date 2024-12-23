@@ -4,17 +4,20 @@
 #include <skill.h>
 #include <passion.h>
 #include <color.h>
+#include <user.h>
 
 
 
 int main(void) {
 
-    char *passions = getPassion();
+    getUserData();
 
-    printf("%s\n", passions);
-
-
+    // char *passions = getPassion();
     // Skill *skills = getSkill();
 
+
+
+    int x;
+    scanf("%d", &x);
     return 0;
 }
