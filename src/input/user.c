@@ -1,7 +1,9 @@
 # include <stdio.h>
 #include <input.h>
 #include <color.h>
-char* getUserData() {
+#include <ctype.h>
+
+char*getUserData() {
     // Prompt user for name
     char *user_name = getString("Enter Your Name");
 
@@ -27,6 +29,21 @@ char* getUserData() {
         }
     }
 }
+char getGender() {
+    char gender;
+
+    printf("Enter your gender (Male=M Female=F Other=O): ");
+    scanf(" %c", &gender);
+
+    while (gender != 'M' && gender != 'F' && gender != 'O') {
+        printf("Invalid input. Please enter M (Male), F (Female), or O (Other): ");
+        scanf(" %c", &gender);
+    }
+
+    return gender;
+}
+
+
 
 
 
