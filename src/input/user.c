@@ -3,6 +3,10 @@
 #include <color.h>
 #include <ctype.h>
 
+/**** Declare functions ****/
+
+char getGender();
+
 char*getUserData() {
     // Prompt user for name
     char *user_name = getString("Enter Your Name");
@@ -28,7 +32,15 @@ char*getUserData() {
 
         }
     }
+
+    /******   call getGender function ******/
+    char gender = getGender();
+    printf("%sYou entered your gender : %c%s\n\n", SUCCESS, gender, RESET);
+
 }
+
+/* problem is you not call getGender function */
+
 char getGender() {
     char gender;
 
