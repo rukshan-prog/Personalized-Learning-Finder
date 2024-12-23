@@ -5,19 +5,42 @@
 #include <passion.h>
 #include <color.h>
 #include <user.h>
+#include <dbcon.h>
 
 
 
 int main(void) {
 
-    getUserData();
+    // Pointer to the database connection
+    sqlite3 *db = NULL;
 
-    // char *passions = getPassion();
-    // Skill *skills = getSkill();
+    // Create a connection to the database
+    if (!createConnection(&db)) {
+        // Failed to connect
+        printf("Failed to connect to the database.\n");
+
+    } else {
+        // Successfully connected
+        printf("Database connection established.\n");
+
+        // code here
+
+        // Close the database connection when done
+        sqlite3_close(db);
+    }
 
 
 
-    int x;
-    scanf("%d", &x);
+
+
+    fixForCloseConsole();
     return 0;
+}
+
+
+// close console
+void fixForCloseConsole() {
+    char c;
+    printf("Press any key to close...");
+    scanf("%c", &c);
 }
