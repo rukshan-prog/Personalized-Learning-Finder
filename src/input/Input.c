@@ -7,7 +7,16 @@
 
 char* option[] = {"yes", "no"};
 
-// Function to get a string
+/*
+ * Function to get a string from the user
+ * It will keep prompting the user until they enter a non-empty string
+ * And it will display an error message if the string is empty
+ * User can change the string if they want
+ *
+ * @param prompt The prompt to display to the user
+ * @return The string entered by the user
+ *
+ */
 char* getString(char *prompt) {
     char *str;
 
@@ -51,7 +60,15 @@ char* getString(char *prompt) {
 }
 
 
-// Function to get an integer
+/*
+ *
+ * Function to get an integer from the user
+ * It will keep prompting the user until they enter a valid integer
+ * And it will display an error message if the integer is invalid
+ *
+ * @param prompt The prompt to display to the user
+ * @return The integer entered by the user
+ */
 int getInteger(const char *prompt) {
     char buffer[256]; // Buffer for user input
     char *endptr;
@@ -95,7 +112,17 @@ int getInteger(const char *prompt) {
 }
 
 
-// Function to get a choice
+/*
+ *
+ * Function to get a choice from the user
+ * It will keep prompting the user until they enter a valid choice
+ * And it will display an error message if the choice is invalid
+ *
+ * @param options The array of options
+ * @param numOptions The number of options
+ * @param prompt The prompt to display to the user
+ * @return The choice as a string entered by the user
+ */
 char *getChoice(char *options[], int numOptions, char *prompt) {
     if (options == NULL || numOptions <= 0) {
         printf("%s%s%s\n", ERROR, "No options provided.", RESET);
@@ -127,4 +154,140 @@ char *getChoice(char *options[], int numOptions, char *prompt) {
     return options[choice];  // Return the selected option
 }
 
+/*
+ *
+ * Function to get a string from the user
+ * It will keep prompting the user until they enter a valid string
+ * And it will display an error message if the string is invalid
+ * user can't change the string after it is entered
+ *
+ * @param prompt The prompt to display to the user
+ * @return The string entered by the user
+ *
+ */
+char *getStringWithoutConform(char *prompt) {
+    char *str;
+    do {
+        // Check if the prompt is not empty
+        if (strcmp(prompt, "") != 0) {
+            printf("%s%s :%s", INPUT, prompt, RESET);
+        } else {
+            printf("%s%s :%s", INPUT, "Enter a string", RESET);
+        }
 
+
+
+        // Allocate memory for the string length of 100
+        str = malloc(100);
+
+
+        // Check if the memory allocation was successful
+        if (str == NULL) {
+            fprintf(stderr, "Memory allocation failed\n");
+            exit(EXIT_FAILURE);
+        }
+
+        // Read the string
+        fgets(str, 100, stdin);
+        // Remove newline character
+        str[strcspn(str, "\n")] = '\0';
+
+        // Check if the string is empty
+        if (strlen(str) == 0) {
+            printf("%s%s%s\n", ERROR, "Empty string.\nPlease try again.\n", RESET);
+        }
+
+        // check if the string is empty
+    } while (strlen(str) == 0);
+    system("cls");
+
+    return str;
+}
+
+
+/*
+ *
+ * Function to get a string from the user
+ * It will not prompt the user
+ * And it will display an error message if the string is invalid
+ * user can't change the string after it is entered
+ *
+ * @param prompt The prompt to display to the user
+ * @return The string entered by the user
+ *
+ */
+char *getStringWithoutPrompt() {
+    char *str;
+    do {
+        // Allocate memory for the string length of 100
+        str = malloc(100);
+
+        // Check if the memory allocation was successful
+        if (str == NULL) {
+            fprintf(stderr, "Memory allocation failed\n");
+            exit(EXIT_FAILURE);
+        }
+
+        // Read the string
+        fgets(str, 100, stdin);
+        // Remove newline character
+        str[strcspn(str, "\n")] = '\0';
+
+        // Check if the string is empty
+        if (strlen(str) == 0) {
+            printf("%s%s%s\n", ERROR, "Empty string.\nPlease try again.\n", RESET);
+        }
+    } while (strlen(str) == 0);
+
+    return str;
+}
+
+/*
+ *
+ * Function to get YES or NO from the user
+ * It will keep prompting the user until they enter YES or NO
+ *
+ * @param prompt The prompt to display to the user
+ * @return The string entered by the user
+ *
+ */
+char *getChoiceYesNo(char *prompt) {
+    char *choice;
+    do {
+        if (strcmp(prompt, "") != 0) {
+            printf("%s%s (YES/NO) :%s", INPUT, prompt, RESET);
+        } else {
+            printf("%s%s (YES/NO) :%s", INPUT, "Enter", RESET);
+        }
+
+        choice = getStringWithoutPrompt();
+
+
+    } while (
+            strcmp(choice, "yes") != 0 &&
+            strcmp(choice, "no") != 0 &&
+            strcmp(choice, "YES") != 0 &&
+            strcmp(choice, "NO") != 0 &&
+            strcmp(choice, "Yes") != 0 &&
+            strcmp(choice, "No") != 0 &&
+            strcmp(choice, "y") != 0 &&
+            strcmp(choice, "n") != 0 &&
+            strcmp(choice, "Y") != 0 &&
+            strcmp(choice, "N") != 0);
+
+    if (
+            strcmp(choice, "yes") == 0 ||
+            strcmp(choice, "YES") == 0 ||
+            strcmp(choice, "y") == 0 ||
+            strcmp(choice, "Y") == 0) {
+        choice = "yes";
+    } else if (
+            strcmp(choice, "no") == 0 ||
+            strcmp(choice, "NO") == 0 ||
+            strcmp(choice, "n") == 0 ||
+            strcmp(choice, "N") == 0) {
+        choice = "no";
+    }
+
+    return choice;
+}
