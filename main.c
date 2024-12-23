@@ -9,9 +9,8 @@
 
 int main(void) {
 
-    Skill *skills = getSkill();
-
     char *passions = getPassion();
+    Skill *skills = getSkill();
 
     return 0;
 }
