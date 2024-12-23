@@ -4,8 +4,10 @@
 #include <ctype.h>
 
 /**** Declare functions ****/
-
 char getGender();
+char* getGender1();
+
+
 
 char*getUserData() {
     // Prompt user for name
@@ -37,10 +39,12 @@ char*getUserData() {
     char gender = getGender();
     printf("%sYou entered your gender : %c%s\n\n", SUCCESS, gender, RESET);
 
+    char* gender1 = getGender1();
+    printf("%sYou entered your gender : %s%s\n\n", SUCCESS, gender1, RESET);
+
 }
 
 /* problem is you not call getGender function */
-
 char getGender() {
     char gender;
 
@@ -55,6 +59,18 @@ char getGender() {
     return gender;
 }
 
+/********* you can use it like this **********/
+char* getGender1() {
+    char* options[] = {
+        "Male",
+        "Female",
+        "Other"
+    };
+    int numOfOptions = 3;
+    char* choice = getChoice(options, numOfOptions, "Select your gender");
+
+    return choice;
+}
 
 
 
