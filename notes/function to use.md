@@ -32,6 +32,8 @@ Use the `getString()` function to prompt the user and get a string input. This i
 
 #### Example:
 ```c
+#include <input.h>
+
 char *str = getString("Your message");
 printf("You entered: %s\n", str);
 ```
@@ -44,6 +46,8 @@ To get an integer from the user, use the `getInteger()` function.
 
 #### Example:
 ```c
+#include <input.h>
+
 int integer = getInteger("Your message");
 printf("You entered: %d\n", integer);
 ```
@@ -56,6 +60,8 @@ If you want to let the user choose from a predefined set of options (like "yes" 
 
 #### Example:
 ```c
+#include <input.h>
+
 // Define available choices
 char* options[] = {
     "yes",
