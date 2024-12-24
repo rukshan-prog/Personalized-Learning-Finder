@@ -25,8 +25,14 @@ add_executable(plf main.c
         src/db_handle/dbcon.c
         src/header/dbcon.h
         src/header/sqlite3.h
-        src/db_handle/create_tables.c
-        src/header/create_tables.h
+        src/db_handle/handle_tables.c
+        src/header/handle_tables.h
+        src/app/course_recommendation.c
+        src/header/course_recommendation.h
+        src/output/output.c
+        src/header/output.h
+        src/input/courses.c
+        src/header/courses.c.h
 )
 
 # Add SQLite library path

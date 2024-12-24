@@ -9,7 +9,7 @@ char* getGender1();
 
 
 
-char*getUserData() {
+char* getUserData() {
     // Prompt user for name
     char *user_name = getString("Enter Your Name");
 
