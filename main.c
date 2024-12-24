@@ -6,28 +6,13 @@
 #include <color.h>
 #include <user.h>
 #include <dbcon.h>
+#include <handle_tables.h>
+#include <course_recommendation.h>
 
 
 
 int main(void) {
 
-    // Pointer to the database connection
-    sqlite3 *db = NULL;
-
-    // Create a connection to the database
-    if (!createConnection(&db)) {
-        // Failed to connect
-        printf("Failed to connect to the database.\n");
-
-    } else {
-        // Successfully connected
-        printf("Database connection established.\n");
-
-        // code here
-
-        // Close the database connection when done
-        sqlite3_close(db);
-    }
 
 
 
@@ -36,6 +21,9 @@ int main(void) {
     fixForCloseConsole();
     return 0;
 }
+
+
+
 
 
 // close console
