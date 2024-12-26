@@ -6,6 +6,7 @@
 #define PERSONALIZED_LEARNING_FINDER_DBCON_H
 
 #include <sqlite3.h>
+#include <stdbool.h>
 
 
 /**
@@ -22,7 +23,7 @@ extern sqlite3 *db;
  *
  * @return 1 on success, 0 on failure
  */
-int initDbConnection();
+bool initDbConnection();
 
 
 

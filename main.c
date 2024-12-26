@@ -15,7 +15,8 @@ int main(void) {
 
 
 
-
+    create_tables();
+    drop_tables();
 
 
     fixForCloseConsole();

@@ -4,153 +4,153 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <dbcon.h>
+#include <color.h>
 #include <handle_tables.h>
 
-int drop_tables();
-int create_user_table();
-int create_course_table();
-int create_skill_table();
-int create_passion_table();
-int create_course_skill_table();
-int create_course_passion_table();
-int create_user_skill_table();
-int create_user_passion_table();
-int create_user_course_table();
-int create_user_skill_passion_table();
-int create_course_skill_passion_table();
-int drop_user_table();
-int drop_course_table();
-int drop_skill_table();
-int drop_passion_table();
-int drop_course_skill_table();
-int drop_course_passion_table();
-int drop_user_skill_table();
-int drop_user_passion_table();
-int drop_user_course_table();
-int drop_user_skill_passion_table();
-int drop_course_skill_passion_table();
+bool create_user_table();
+bool create_course_table();
+bool create_skill_table();
+bool create_passion_table();
+bool create_course_skill_table();
+bool create_course_passion_table();
+bool create_user_skill_table();
+bool create_user_passion_table();
+bool create_user_course_table();
+bool create_user_skill_passion_table();
+bool create_course_skill_passion_table();
+bool drop_user_table();
+bool drop_course_table();
+bool drop_skill_table();
+bool drop_passion_table();
+bool drop_course_skill_table();
+bool drop_course_passion_table();
+bool drop_user_skill_table();
+bool drop_user_passion_table();
+bool drop_user_course_table();
+bool drop_user_skill_passion_table();
+bool drop_course_skill_passion_table();
 
 
-
-int create_tables() {
-    initDbConnection();
-    create_user_table();
-    create_course_table();
-    create_skill_table();
-    create_passion_table();
-    create_course_skill_table();
-    create_course_passion_table();
-    create_user_skill_table();
-    create_user_passion_table();
-    create_user_course_table();
-    create_user_skill_passion_table();
-    create_course_skill_passion_table();
-    closeDbConnection();
-    return 1;
+bool create_tables() {
+    if (initDbConnection() == false) { printf("%sDatabase connection failed.%s\n", ERROR, RESET); return false; }
+    else if (create_user_table() == false) { printf("%sUser table creation failed.%s\n", ERROR, RESET); return false; }
+    else if (create_course_table() == false) { printf("%sCourse table creation failed.%s\n", ERROR, RESET); return false; }
+    else if (create_skill_table() == false) { printf("%sSkill table creation failed.%s\n", ERROR, RESET); return false; }
+    else if (create_passion_table() == false) { printf("%sPassion table creation failed.%s\n", ERROR, RESET); return false; }
+    else if (create_course_skill_table() == false) { printf("%sCourse skill table creation failed.%s\n", ERROR, RESET); return false; }
+    else if (create_course_passion_table() == false) { printf("%sCourse passion table creation failed.%s\n", ERROR, RESET); return false; }
+    else if (create_user_skill_table() == false) { printf("%sUser skill table creation failed.%s\n", ERROR, RESET); return false; }
+    else if (create_user_passion_table() == false) { printf("%sUser passion table creation failed.%s\n", ERROR, RESET); return false; }
+    else if (create_user_course_table() == false) { printf("%sUser course table creation failed.%s\n", ERROR, RESET); return false; }
+    else if (create_user_skill_passion_table() == false) { printf("%sUser skill passion table creation failed.%s\n", ERROR, RESET); return false; }
+    else if (create_course_skill_passion_table() == false) { printf("%sCourse skill passion table creation failed.%s\n", ERROR, RESET); return false; }
+    else { printf("%sTables created successfully.%s\n", SUCCESS, RESET); closeDbConnection(); }
+    return true;
 }
 
-int drop_tables() {
-    initDbConnection();
-    drop_user_table();
-    drop_course_table();
-    drop_skill_table();
-    drop_passion_table();
-    drop_course_skill_table();
-    drop_course_passion_table();
-    drop_user_skill_table();
-    drop_user_passion_table();
-    drop_user_course_table();
-    drop_user_skill_passion_table();
-    drop_course_skill_passion_table();
-    closeDbConnection();
-    return 1;
+bool drop_tables() {
+    if (initDbConnection() == false) { printf("%sDatabase connection failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_user_table() == false) { printf("%sUser table drop failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_course_table() == false) { printf("%sCourse table drop failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_skill_table() == false) { printf("%sSkill table drop failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_passion_table() == false) { printf("%sPassion table drop failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_course_skill_table() == false) { printf("%sCourse skill table drop failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_course_passion_table() == false) { printf("%sCourse passion table drop failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_user_skill_table() == false) { printf("%sUser skill table drop failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_user_passion_table() == false) { printf("%sUser passion table drop failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_user_course_table() == false) { printf("%sUser course table drop failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_user_skill_passion_table() == false) { printf("%sUser skill passion table drop failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_course_skill_passion_table() == false) { printf("%sCourse skill passion table drop failed.%s\n", ERROR, RESET); return false; }
+    else { printf("%sTables dropped successfully.%s\n", SUCCESS, RESET); closeDbConnection(); }
+    return true;
 }
 
-int create_user_table() {
-    return 1;
+bool create_user_table() {
+    return true;
 }
 
-int create_course_table() {
-    return 1;
+bool create_course_table() {
+    return true;
 }
 
-int create_skill_table() {
-    return 1;
+bool create_skill_table() {
+    return true;
 }
 
-int create_passion_table() {
-    return 1;
+bool create_passion_table() {
+    return true;
 }
 
-int create_course_skill_table() {
-    return 1;
+bool create_course_skill_table() {
+    return true;
 }
 
-int create_course_passion_table() {
-    return 1;
+bool create_course_passion_table() {
+    return true;
 }
 
-int create_user_skill_table() {
-    return 1;
+bool create_user_skill_table() {
+    return true;
 }
 
-int create_user_passion_table() {
-    return 1;
+bool create_user_passion_table() {
+    return true;
 }
 
-int create_user_course_table() {
-    return 1;
+bool create_user_course_table() {
+    return true;
 }
 
-int create_user_skill_passion_table() {
-    return 1;
+bool create_user_skill_passion_table() {
+    return true;
 }
 
-int create_course_skill_passion_table() {
-    return 1;
+bool create_course_skill_passion_table() {
+    return true;
 }
 
-int drop_user_table() {
-    return 1;
+bool drop_user_table() {
+    return true;
 }
 
-int drop_course_table() {
-    return 1;
+bool drop_course_table() {
+    return true;
 }
 
-int drop_skill_table() {
-    return 1;
+bool drop_skill_table() {
+    return true;
 }
 
-int drop_passion_table() {
-    return 1;
+bool drop_passion_table() {
+    return true;
 }
 
-int drop_course_skill_table() {
-    return 1;
+bool drop_course_skill_table() {
+    return true;
 }
 
-int drop_course_passion_table() {
-    return 1;
+bool drop_course_passion_table() {
+    return true;
 }
 
-int drop_user_skill_table() {
-    return 1;
+bool drop_user_skill_table() {
+    return true;
 }
 
-int drop_user_passion_table() {
-    return 1;
+bool drop_user_passion_table() {
+    return true;
 }
 
-int drop_user_course_table() {
-    return 1;
+bool drop_user_course_table() {
+    return true;
 }
 
-int drop_user_skill_passion_table() {
-    return 1;
+bool drop_user_skill_passion_table() {
+    return true;
 }
 
-int drop_course_skill_passion_table() {
-    return 1;
+bool drop_course_skill_passion_table() {
+    return true;
 }
