@@ -6,7 +6,8 @@
 #define PERSONALIZED_LEARNING_FINDER_CREATE_TABLES_H
 
 
-int create_tables();
+bool create_tables();
+bool drop_tables();
 
 
 #endif //PERSONALIZED_LEARNING_FINDER_CREATE_TABLES_H

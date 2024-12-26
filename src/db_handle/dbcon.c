@@ -12,20 +12,25 @@ sqlite3 *db = NULL; // Define the global variable for the database connection
 
 
 // Initialize the database connection
-int initDbConnection() {
+bool initDbConnection() {
 
     const char *db_name = "plf.db";
 
     fprintf(stdout, "%sInitializing database connection...%s\n", INFO, RESET);
 
-    int rc = sqlite3_open(db_name, &db);
-    if (rc) {
-        fprintf(stderr, "%sCan't open database: %s%s\n", ERROR, sqlite3_errmsg(db), RESET);
-        return 0; // Failure
+    if (db) {
+        fprintf(stdout, "%sDatabase connection already initialized.%s\n", INFO, RESET);
+        return true;
+    } else {
+        int rc = sqlite3_open(db_name, &db);
+        if (rc) {
+            fprintf(stderr, "%sCan't open database: %s%s\n", ERROR, sqlite3_errmsg(db), RESET);
+            return false; // Failure
+        } else {
+            fprintf(stdout, "%sDatabase connection opened successfully.%s\n", SUCCESS, RESET);
+            return true;
+        }
     }
-    fprintf(stdout, "%sDatabase connection opened successfully.%s\n", SUCCESS, RESET);
-
-    return 1;
 }
 
 
