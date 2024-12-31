@@ -5,6 +5,7 @@
 #include <errno.h>
 #include <color.h>
 
+// Options for global use
 char* option[] = {"yes", "no"};
 
 // Function to get a string
