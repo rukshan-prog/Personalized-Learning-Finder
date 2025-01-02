@@ -53,7 +53,7 @@ void getUserData(UserData *userData) {
 
 // update user data in to the display
 void displayUserData(UserData *userData) {
-    printf("%sFill the form%s\n\n", INFO, RESET);
+    printf("%sFILL THE FORM%s\n\n", INFO, RESET);
 
     // name
     if (userData -> name == NULL) {

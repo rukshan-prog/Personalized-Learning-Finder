@@ -38,7 +38,7 @@ add_executable(plf main.c
         src/db_handle/retrieve.c
         src/header/retrieve.h
         src/app/admin.c
-        src/app/admin.h
+        src/header/admin.h
 )
 
 # Add SQLite library path

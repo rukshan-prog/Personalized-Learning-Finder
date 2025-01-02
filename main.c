@@ -8,6 +8,7 @@
 #include <dbcon.h>
 #include <handle_tables.h>
 #include <course_recommendation.h>
+#include <admin.h>
 
 
 // Main function
@@ -29,7 +30,7 @@ int main(void) {
     if (choice == options[0]) {
         runUser();
     } else {
-        //runAdmin();
+        runAdmin();
     }
 
 
