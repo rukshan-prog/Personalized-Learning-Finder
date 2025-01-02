@@ -20,8 +20,19 @@ Skills* getSkill() {
 
     do {
         // Ask the user how many skills they want to add
-        skillCount = getInteger("Enter the number of skills you want to add");
-        printf("\n");
+        while (1) {
+            skillCount = getInteger("Enter number of skills you want to add between 1 and 3");
+
+            if (skillCount > 3) {
+                printf("%sYou can add a maximum of 3 skills%s\n", ERROR, RESET);
+            } else if (skillCount < 1) {
+                printf("%sYou must add at least 1 skill%s\n", ERROR, RESET);
+            } else {
+                system("cls");
+                printf("%sYou have entered %d skills. Now enter your skills%s\n\n", SUCCESS, skillCount, RESET);
+                break;
+            }
+        }
 
         // Allocate memory for dynamic skills
         skills = (Skills*)malloc(skillCount * sizeof(Skills));
@@ -43,7 +54,11 @@ Skills* getSkill() {
             // Prompt for the skill level
             char prompt2[100];
             snprintf(prompt2, sizeof(prompt2), "\nEnter your skill level for %s%s", RESET, skillName);
-            char* levels[] = {"Beginner", "Intermediate", "Advanced"};
+            char* levels[] = {
+                "Beginner",
+                "Intermediate",
+                "Advanced"
+            };
             char* level = getChoice(levels, 3, prompt2);
 
             // Store the skill
@@ -58,10 +73,10 @@ Skills* getSkill() {
             system("cls");
 
             // Display the entered skills
-            printf("\n%sYour Skills List:%s\n", SUCCESS, RESET);
+            printf("\n%sYour Skills List:%s ", SUCCESS, RESET);
             printf("%sSkill\t\t\tLevel%s\n",INFO, RESET);
             for (int j = 0; j <= i; j++) {
-                printf("%s\t\t\t%s\n", skills -> skills[j].skillName, skills -> skills[j].level);
+                printf("\t\t  %s\t\t\t%s\n", skills -> skills[j].skillName, skills -> skills[j].level);
             }
             printf("\n");
         }

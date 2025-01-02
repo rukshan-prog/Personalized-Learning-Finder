@@ -14,6 +14,7 @@ char* getGender();
 int getAge();
 char *getEducationLevel();
 void displayUserData(UserData *userData);
+void wait();
 
 
 
@@ -28,6 +29,7 @@ void getUserData(UserData *userData) {
     userData->skills.skillCount = 0;
     memset(userData->skills.skills, 0, sizeof(userData->skills.skills));
 
+    // Get user data
     displayUserData(userData);
     userData -> name = getName();
     system("cls");
@@ -47,8 +49,6 @@ void getUserData(UserData *userData) {
     userData -> skills = *getSkill();
     system("cls");
     displayUserData(userData);
-
-
 }
 
 // update user data in to the display
@@ -91,7 +91,7 @@ void displayUserData(UserData *userData) {
 
     // skill
     printf("%sYour skill list: %s", RESET, RESET);
-    printf("%sSkill\t\t\t\tLevel%s\n",INFO, RESET);
+    printf("%s Skill\t\t\t\tLevel%s\n",INFO, RESET);
 
     if (userData -> skills . skillCount <= 0) {
         for (int j = 1; j <= 2; j++) {
@@ -108,7 +108,7 @@ void displayUserData(UserData *userData) {
             printf("\t\t%d.%s\t\t\t\t%s\n", i + 1, skillName, skillLevel);
         }
     }
-    printf("%sPlease enter your details here:%s\n\n", INFO, RESET);
+    printf("\n%sPlease enter your details here:%s\n\n", INFO, RESET);
 }
 
 // Get age from user
@@ -131,26 +131,25 @@ int getAge() {
 }
 
 char* getName() {
-    int x;
-    printf("enter name: ");
-    scanf("%d",&x);
+    wait();
     return "Fake name";
 }
 
 char* getGender() {
-    int x;
-    printf("enter gender: ");
-    scanf("%d",&x);
+    wait();
     return "male";
 }
 
 char *getEducationLevel() {
-    int x;
-    printf("enter EducationLevel: ");
-    scanf("%d",&x);
+    wait();
     return "A/L";
 }
 
+// For testing purposes
+void wait() {
+    char c;
+    scanf("%c", &c);
+}
 
 
 

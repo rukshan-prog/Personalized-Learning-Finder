@@ -13,7 +13,6 @@
 // Main function
 int main(void) {
 
-
     char who[20];
     // Define available choices
     char* options[] = {
@@ -32,8 +31,6 @@ int main(void) {
     } else {
         //runAdmin();
     }
-
-
 
 
     fixForCloseConsole();
