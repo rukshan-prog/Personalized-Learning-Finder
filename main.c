@@ -10,13 +10,30 @@
 #include <course_recommendation.h>
 
 
-
+// Main function
 int main(void) {
 
 
+    char who[20];
+    // Define available choices
+    char* options[] = {
+            "User",
+            "Admin"
+    };
+    int numOptions = 2; // Number of options
 
-    create_tables();
-    drop_tables();
+    // Get choice from the user
+    char* choice = getChoice(options, numOptions, "Who are you?");
+
+    system("cls");
+
+    if (choice == options[0]) {
+        runUser();
+    } else {
+        //runAdmin();
+    }
+
+
 
 
     fixForCloseConsole();
@@ -25,11 +42,9 @@ int main(void) {
 
 
 
-
-
 // close console
 void fixForCloseConsole() {
     char c;
-    printf("Press any key to close...");
+    printf("\n\nPress any key to close...");
     scanf("%c", &c);
 }

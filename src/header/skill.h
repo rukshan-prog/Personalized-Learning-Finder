@@ -5,14 +5,22 @@
 #ifndef C_GROUP_PROJECT_SKILL_H
 #define C_GROUP_PROJECT_SKILL_H
 
-// struct for skill
+// single skill
 typedef struct {
     char skillName[100];
     char level[100];
 } Skill;
 
+
+// array of skills
+typedef struct {
+    Skill skills[3]; // array of skills
+    int skillCount;
+} Skills;
+
 // function to get skill
-Skill* getSkill();
+Skills* getSkill();
+
 
 
 #endif //C_GROUP_PROJECT_SKILL_H

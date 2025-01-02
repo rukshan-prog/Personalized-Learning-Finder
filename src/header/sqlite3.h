@@ -247,7 +247,7 @@ SQLITE_API const char *sqlite3_compileoption_get(int N);
 ** with the verbs [SQLITE_CONFIG_SINGLETHREAD], [SQLITE_CONFIG_MULTITHREAD],
 ** or [SQLITE_CONFIG_SERIALIZED].  ^(The return value of the
 ** sqlite3_threadsafe() function shows only the compile-time setting of
-** thread safety, not any run-time changes to that setting made by
+** thread safety, not any runUser-time changes to that setting made by
 ** sqlite3_config(). In other words, the return value from sqlite3_threadsafe()
 ** is unchanged by calls to sqlite3_config().)^
 **
@@ -366,7 +366,7 @@ typedef int (*sqlite3_callback)(void*,int,char**, char**);
 **
 ** The sqlite3_exec() interface is a convenience wrapper around
 ** [sqlite3_prepare_v2()], [sqlite3_step()], and [sqlite3_finalize()],
-** that allows an application to run multiple statements of SQL
+** that allows an application to runUser multiple statements of SQL
 ** without having to use a lot of C code.
 **
 ** ^The sqlite3_exec() interface runs zero or more UTF-8 encoded,
@@ -892,7 +892,7 @@ struct sqlite3_io_methods {
 ** current transaction.  This hint is not guaranteed to be accurate but it
 ** is often close.  The underlying VFS might choose to preallocate database
 ** file space based on this hint in order to help writes to the database
-** file run faster.
+** file runUser faster.
 **
 ** <li>[[SQLITE_FCNTL_SIZE_LIMIT]]
 ** The [SQLITE_FCNTL_SIZE_LIMIT] opcode is used by in-memory VFS that
@@ -1880,7 +1880,7 @@ struct sqlite3_mem_methods {
 ** type int, interpreted as a boolean, which if true provides a hint to
 ** SQLite that it should avoid large memory allocations if possible.
 ** SQLite will run faster if it is free to make large memory allocations,
-** but some application might prefer to run slower in exchange for
+** but some application might prefer to runUser slower in exchange for
 ** guarantees about memory fragmentation that are possible if large
 ** allocations are avoided.  This hint is normally off.
 ** </dd>
@@ -2367,7 +2367,7 @@ struct sqlite3_mem_methods {
 ** </dd>
 **
 ** [[SQLITE_DBCONFIG_RESET_DATABASE]] <dt>SQLITE_DBCONFIG_RESET_DATABASE</dt>
-** <dd> Set the SQLITE_DBCONFIG_RESET_DATABASE flag and then run
+** <dd> Set the SQLITE_DBCONFIG_RESET_DATABASE flag and then runUser
 ** [VACUUM] in order to reset a database back to an empty database
 ** with no schema and no content. The following process works even for
 ** a badly corrupted database file:
@@ -2660,7 +2660,7 @@ SQLITE_API void sqlite3_set_last_insert_rowid(sqlite3*,sqlite3_int64);
 **        statement sets the value returned by sqlite3_changes()
 **        upon completion as normal. Of course, this value will not include
 **        any changes performed by sub-triggers, as the sqlite3_changes()
-**        value will be saved and restored after each sub-trigger has run.)^
+**        value will be saved and restored after each sub-trigger has runUser.)^
 ** </ul>
 **
 ** ^This means that if the changes() SQL function (or similar) is used
@@ -2705,7 +2705,7 @@ SQLITE_API sqlite3_int64 sqlite3_changes64(sqlite3*);
 ** are not counted.
 **
 ** The [sqlite3_total_changes(D)] interface only reports the number
-** of rows that changed due to SQL statement run against database
+** of rows that changed due to SQL statement runUser against database
 ** connection D.  Any changes by other database connections are ignored.
 ** To detect changes against a database file from other database
 ** connections use the [PRAGMA data_version] command or the
@@ -3337,7 +3337,7 @@ SQLITE_API int sqlite3_set_authorizer(
 ** ^The callback function registered by sqlite3_profile() is invoked
 ** as each SQL statement finishes.  ^The profile callback contains
 ** the original statement text and an estimate of wall-clock time
-** of how long that statement took to run.  ^The profile callback
+** of how long that statement took to runUser.  ^The profile callback
 ** time is in units of nanoseconds, however the current implementation
 ** is only capable of millisecond resolution so the six least significant
 ** digits in the time are meaningless.  Future versions of SQLite
@@ -3386,7 +3386,7 @@ SQLITE_API SQLITE_DEPRECATED void *sqlite3_profile(sqlite3*,
 ** information as is provided by the [sqlite3_profile()] callback.
 ** ^The P argument is a pointer to the [prepared statement] and the
 ** X argument points to a 64-bit integer which is approximately
-** the number of nanoseconds that the prepared statement took to run.
+** the number of nanoseconds that the prepared statement took to runUser.
 ** ^The SQLITE_TRACE_PROFILE callback is invoked when the statement finishes.
 **
 ** [[SQLITE_TRACE_ROW]] <dt>SQLITE_TRACE_ROW</dt>
@@ -4034,7 +4034,7 @@ SQLITE_API int sqlite3_error_offset(sqlite3 *db);
 ** Think of each SQL statement as a separate computer program.  The
 ** original SQL text is source code.  A prepared statement object
 ** is the compiled object code.  All SQL must be converted into a
-** prepared statement before it can be run.
+** prepared statement before it can be runUser.
 **
 ** The life-cycle of a prepared statement object usually goes like this:
 **
@@ -4088,7 +4088,7 @@ typedef struct sqlite3_stmt sqlite3_stmt;
 ** created by an untrusted script can be contained using the
 ** [max_page_count] [PRAGMA].
 **
-** New run-time limit categories may be added in future releases.
+** New runUser-time limit categories may be added in future releases.
 */
 SQLITE_API int sqlite3_limit(sqlite3*, int id, int newVal);
 
@@ -4097,7 +4097,7 @@ SQLITE_API int sqlite3_limit(sqlite3*, int id, int newVal);
 ** KEYWORDS: {limit category} {*limit categories}
 **
 ** These constants define various performance limits
-** that can be lowered at run-time using [sqlite3_limit()].
+** that can be lowered at runUser-time using [sqlite3_limit()].
 ** The synopsis of the meanings of the various limits is shown below.
 ** Additional information is available at [limits | Limits in SQLite].
 **
@@ -4272,7 +4272,7 @@ SQLITE_API int sqlite3_limit(sqlite3*, int id, int newVal);
 ** <li>
 ** ^If the database schema changes, instead of returning [SQLITE_SCHEMA] as it
 ** always used to do, [sqlite3_step()] will automatically recompile the SQL
-** statement and try to run it again. As many as [SQLITE_MAX_SCHEMA_RETRY]
+** statement and try to runUser it again. As many as [SQLITE_MAX_SCHEMA_RETRY]
 ** retries will occur before sqlite3_step() gives up and returns an error.
 ** </li>
 **
@@ -4498,7 +4498,7 @@ SQLITE_API int sqlite3_stmt_explain(sqlite3_stmt *pStmt, int eMode);
 **
 ** ^The sqlite3_stmt_busy(S) interface returns true (non-zero) if the
 ** [prepared statement] S has been stepped at least once using
-** [sqlite3_step(S)] but has neither run to completion (returned
+** [sqlite3_step(S)] but has neither runUser to completion (returned
 ** [SQLITE_DONE] from [sqlite3_step(S)]) nor
 ** been reset using [sqlite3_reset(S)].  ^The sqlite3_stmt_busy(S)
 ** interface returns false if S is a NULL pointer.  If S is not a
@@ -4535,7 +4535,7 @@ SQLITE_API int sqlite3_stmt_busy(sqlite3_stmt*);
 ** sqlite3_value object but no mutex is held for an unprotected
 ** sqlite3_value object.  If SQLite is compiled to be single-threaded
 ** (with [SQLITE_THREADSAFE=0] and with [sqlite3_threadsafe()] returning 0)
-** or if SQLite is run in one of reduced mutex modes
+** or if SQLite is runUser in one of reduced mutex modes
 ** [SQLITE_CONFIG_SINGLETHREAD] or [SQLITE_CONFIG_MULTITHREAD]
 ** then there is no distinction between protected and unprotected
 ** sqlite3_value objects and they can be used interchangeably.  However,
@@ -4834,7 +4834,7 @@ SQLITE_API int sqlite3_column_count(sqlite3_stmt *pStmt);
 **
 ** ^The returned string pointer is valid until either the [prepared statement]
 ** is destroyed by [sqlite3_finalize()] or until the statement is automatically
-** reprepared by the first call to [sqlite3_step()] for a particular run
+** reprepared by the first call to [sqlite3_step()] for a particular runUser
 ** or until the next call to
 ** sqlite3_column_name() or sqlite3_column_name16() on the same column.
 **
@@ -4863,7 +4863,7 @@ SQLITE_API const void *sqlite3_column_name16(sqlite3_stmt*, int N);
 ** the origin_ routines return the column name.
 ** ^The returned string is valid until the [prepared statement] is destroyed
 ** using [sqlite3_finalize()] or until the statement is automatically
-** reprepared by the first call to [sqlite3_step()] for a particular run
+** reprepared by the first call to [sqlite3_step()] for a particular runUser
 ** or until the same information is requested
 ** again in a different encoding.
 **
@@ -4922,7 +4922,7 @@ SQLITE_API const void *sqlite3_column_origin_name16(sqlite3_stmt*,int);
 ** this routine would return the string "VARIANT" for the second result
 ** column (i==1), and a NULL pointer for the first result column (i==0).)^
 **
-** ^SQLite uses dynamic run-time typing.  ^So just because a column
+** ^SQLite uses dynamic runUser-time typing.  ^So just because a column
 ** is declared to contain a particular type does not mean that the
 ** data stored in that column is of the declared type.  SQLite is
 ** strongly typed, but the typing is dynamic not static.  ^Type
@@ -4972,7 +4972,7 @@ SQLITE_API const void *sqlite3_column_decltype16(sqlite3_stmt*,int);
 ** caller. The values may be accessed using the [column access functions].
 ** sqlite3_step() is called again to retrieve the next row of data.
 **
-** ^[SQLITE_ERROR] means that a run-time error (such as a constraint
+** ^[SQLITE_ERROR] means that a runUser-time error (such as a constraint
 ** violation) has occurred.  sqlite3_step() should not be called again on
 ** the VM. More information may be found by calling [sqlite3_errmsg()].
 ** ^With the legacy interface, a more specific error code (for example,
@@ -8602,7 +8602,7 @@ SQLITE_API int sqlite3_status64(
 ** CAPI3REF: Status Parameters
 ** KEYWORDS: {status parameters}
 **
-** These integer constants designate various run-time status parameters
+** These integer constants designate various runUser-time status parameters
 ** that can be returned by [sqlite3_status()].
 **
 ** <dl>
@@ -8879,7 +8879,7 @@ SQLITE_API int sqlite3_stmt_status(sqlite3_stmt*, int op,int resetFlg);
 ** were created automatically in order to help joins run faster.
 ** A non-zero value in this counter may indicate an opportunity to
 ** improvement performance by adding permanent indices that do not
-** need to be reinitialized each time the statement is run.</dd>
+** need to be reinitialized each time the statement is runUser.</dd>
 **
 ** [[SQLITE_STMTSTATUS_VM_STEP]] <dt>SQLITE_STMTSTATUS_VM_STEP</dt>
 ** <dd>^This is the number of virtual machine operations executed
@@ -9707,7 +9707,7 @@ SQLITE_API int sqlite3_wal_checkpoint(sqlite3 *db, const char *zDb);
 ** </dl>
 **
 ** ^If pnLog is not NULL, then *pnLog is set to the total number of frames in
-** the log file or to -1 if the checkpoint could not run because
+** the log file or to -1 if the checkpoint could not runUser because
 ** of an error or because the database is not in [WAL mode]. ^If pnCkpt is not
 ** NULL,then *pnCkpt is set to the total number of checkpointed frames in the
 ** log file (including any that were already checkpointed before the function
@@ -9986,7 +9986,7 @@ SQLITE_API const char *sqlite3_vtab_collation(sqlite3_index_info*,int);
 ** one such row may optionally be omitted from the result.)^
 ** The virtual table is not required to omit rows that are duplicates
 ** over the "colUsed" columns, but if the virtual table can do that without
-** too much extra effort, it could potentially help the query to run faster.
+** too much extra effort, it could potentially help the query to runUser faster.
 ** This mode is used for a DISTINCT query.
 ** <li value="3"><p>
 ** ^(If the sqlite3_vtab_distinct() interface returns 3, that means the
@@ -10242,7 +10242,7 @@ SQLITE_API int sqlite3_vtab_rhs_value(sqlite3_index_info*, int, sqlite3_value **
 ** <dl>
 ** [[SQLITE_SCANSTAT_NLOOP]] <dt>SQLITE_SCANSTAT_NLOOP</dt>
 ** <dd>^The [sqlite3_int64] variable pointed to by the V parameter will be
-** set to the total number of times that the X-th loop has run.</dd>
+** set to the total number of times that the X-th loop has runUser.</dd>
 **
 ** [[SQLITE_SCANSTAT_NVISIT]] <dt>SQLITE_SCANSTAT_NVISIT</dt>
 ** <dd>^The [sqlite3_int64] variable pointed to by the V parameter will be set
@@ -13447,7 +13447,7 @@ struct Fts5ExtensionApi {
 **   provide synonyms for prefixes). However, a non-prefix query like '1st'
 **   will match against "1st" and "first". This method does not require
 **   extra disk space, as no extra entries are added to the FTS index.
-**   On the other hand, it may require more CPU cycles to run MATCH queries,
+**   On the other hand, it may require more CPU cycles to runUser MATCH queries,
 **   as separate queries of the FTS index are required for each synonym.
 **
 **   When using methods (2) or (3), it is important that the tokenizer only

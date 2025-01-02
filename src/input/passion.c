@@ -10,11 +10,7 @@
 
 // get passion from the user
 char* getPassion() {
-
-
-    getString("Enter Your Passion");
-
-
-
-    return NULL;
+    char *passion;
+    passion = getString("Enter Your Passion");
+    return passion;
 }

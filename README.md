@@ -59,7 +59,7 @@ Ensure the following software is installed on your system:
     - Once the cloning is done, you will see a folder named **Personalized-Learning-Finder** in your desktop
 
 2. **Run the Application**  
-   - You can see the run button in the bottom middle of the screen
-   - Click on the run button
-   - It will build the project and run the application
+   - You can see the runUser button in the bottom middle of the screen
+   - Click on the runUser button
+   - It will build the project and runUser the application
    - That's it!

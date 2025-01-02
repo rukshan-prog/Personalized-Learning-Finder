@@ -128,4 +128,3 @@ char *getChoice(char *options[], int numOptions, char *prompt) {
     return options[choice];  // Return the selected option
 }
 
-

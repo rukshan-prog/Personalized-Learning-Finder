@@ -5,8 +5,18 @@
 #ifndef PERSONALIZED_LEARNING_FINDER_COURSE_RECOMMENDATION_H
 #define PERSONALIZED_LEARNING_FINDER_COURSE_RECOMMENDATION_H
 
+#include <skill.h>
 
-void run();
+typedef struct {
+    char* name;
+    int age;
+    char* gender;
+    char* educationLevel;
+    char* passion;
+    Skills skills;
+} UserData;
+
+void runUser();
 
 
 #endif //PERSONALIZED_LEARNING_FINDER_COURSE_RECOMMENDATION_H
