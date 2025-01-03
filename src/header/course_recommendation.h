@@ -16,7 +16,7 @@ typedef struct {
     Skills skills;
 } UserData;
 
-void runUser();
+void run();
 
 
 #endif //PERSONALIZED_LEARNING_FINDER_COURSE_RECOMMENDATION_H
