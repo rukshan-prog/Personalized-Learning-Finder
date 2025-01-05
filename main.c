@@ -30,3 +30,4 @@ void fixForCloseConsole() {
     printf("\n\nPress any key to close...");
     scanf("%c", &c);
 }
+

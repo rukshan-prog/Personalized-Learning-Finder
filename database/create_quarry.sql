@@ -1,16 +1,51 @@
+-- 1. Create the Institution table
+CREATE TABLE  Institution (
+                             InstitutionID INTEGER PRIMARY KEY AUTOINCREMENT,
+                             InstitutionName TEXT NOT NULL UNIQUE
+);
+
+-- 2. Create the Category table
+CREATE TABLE Category (
+                          CategoryID INTEGER PRIMARY KEY AUTOINCREMENT,
+                          CategoryName TEXT NOT NULL UNIQUE
+);
+
+-- 3. Create the Currency table
+CREATE TABLE IF NOT EXISTS Currency (
+                          CurrencyID INTEGER PRIMARY KEY AUTOINCREMENT,
+                          CurrencyCode TEXT NOT NULL UNIQUE -- e.g., 'USD', 'EUR'
+);
+
+-- 4. Create the Gender table
+CREATE TABLE Gender (
+                        GenderID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        GenderType TEXT NOT NULL UNIQUE -- e.g., 'Male', 'Female', 'Any'
+);
+
+-- 5. Create the MinEducationLevel table
+CREATE TABLE MinEducationLevel (
+                                   EducationLevelID INTEGER PRIMARY KEY AUTOINCREMENT,
+                                   EducationLevelName TEXT NOT NULL UNIQUE -- e.g., 'High School', 'Bachelor's'
+);
+
 -- 1. Create the Courses table
 CREATE TABLE IF NOT EXISTS Courses (
                          CourseID INTEGER PRIMARY KEY AUTOINCREMENT,
                          CourseName TEXT NOT NULL,
-                         Institution TEXT NOT NULL,
-                         Category TEXT NOT NULL, -- e.g., "Programming", "Arts"
+                         InstitutionID INTEGER,
+                         CategoryID INTEGER,
                          Description TEXT,
-                         Duration TEXT, -- e.g., "3 months", "6 weeks"
-                         Fee REAL, -- Course fee amount
-                         Currency TEXT DEFAULT 'USD', -- Currency code, e.g., 'USD', 'EUR'
-                         MinAge INTEGER, -- Minimum age to enroll
-                         Gender TEXT CHECK(Gender IN ('Male', 'Female', 'Any')) DEFAULT 'Any', -- Gender requirement
-                         MinEducationLevel TEXT -- e.g., "High School", "Bachelor's"
+                         Duration TEXT,
+                         Fee REAL,
+                         CurrencyID INTEGER,
+                         MinAge INTEGER,
+                         GenderID INTEGER,
+                         MinEducationLevelID INTEGER,
+                         FOREIGN KEY (InstitutionID) REFERENCES Institution (InstitutionID),
+                         FOREIGN KEY (CategoryID) REFERENCES Category (CategoryID),
+                         FOREIGN KEY (CurrencyID) REFERENCES Currency (CurrencyID),
+                         FOREIGN KEY (GenderID) REFERENCES Gender (GenderID),
+                         FOREIGN KEY (MinEducationLevelID) REFERENCES MinEducationLevel (EducationLevelID)
 );
 
 -- 2. Create the Skills table

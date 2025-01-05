@@ -37,6 +37,9 @@ add_executable(plf main.c
         src/header/inseart.h
         src/db_handle/retrieve.c
         src/header/retrieve.h
+        src/db_handle/fake_data.c
+        src/header/fake_data.h
+        src/header/main.h
 )
 
 # Add SQLite library path

@@ -39,8 +39,9 @@ void closeDbConnection();
  * Execute a query on the database
  *
  * @param query The query to execute
+ * @param prompt for the success
  *
  */
-int executeQuery(const char *query);
+int executeQuery(const char *query, char *prompt);
 
 #endif //PERSONALIZED_LEARNING_FINDER_DBCON_H

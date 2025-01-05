@@ -9,6 +9,11 @@
 #include <color.h>
 #include <handle_tables.h>
 
+bool create_institution_table();
+bool create_category_table();
+bool create_currency_table();
+bool create_gender_table();
+bool create_min_education_level_table();
 bool create_course_table();
 bool create_skill_table();
 bool create_passion_table();
@@ -19,11 +24,20 @@ bool drop_skill_table();
 bool drop_passion_table();
 bool drop_course_skill_table();
 bool drop_course_passion_table();
-
+bool drop_institution_table();
+bool drop_category_table();
+bool drop_currency_table();
+bool drop_gender_table();
+bool drop_min_education_level_table();
 
 
 bool create_tables() {
     if (initDbConnection() == false) { printf("%sDatabase connection failed.%s\n", ERROR, RESET); return false; }
+    else if (create_institution_table() == false) { printf("%sInstitution table creation failed.%s\n", ERROR, RESET); return false; }
+    else if (create_category_table() == false) { printf("%sCategory table creation failed.%s\n", ERROR, RESET); return false; }
+    else if (create_currency_table() == false) { printf("%sCurrency table creation failed.%s\n", ERROR, RESET); return false; }
+    else if (create_gender_table() == false) { printf("%sGender table creation failed.%s\n", ERROR, RESET); return false; }
+    else if (create_min_education_level_table() == false) { printf("%sMin education level table creation failed.%s\n", ERROR, RESET); return false; }
     else if (create_course_table() == false) { printf("%sCourse table creation failed.%s\n", ERROR, RESET); return false; }
     else if (create_skill_table() == false) { printf("%sSkill table creation failed.%s\n", ERROR, RESET); return false; }
     else if (create_passion_table() == false) { printf("%sPassion table creation failed.%s\n", ERROR, RESET); return false; }
@@ -35,6 +49,11 @@ bool create_tables() {
 
 bool drop_tables() {
     if (initDbConnection() == false) { printf("%sDatabase connection failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_institution_table() == false) { printf("%sInstitution table drop failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_category_table() == false) { printf("%sCategory table drop failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_currency_table() == false) { printf("%sCurrency table drop failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_gender_table() == false) { printf("%sGender table drop failed.%s\n", ERROR, RESET); return false; }
+    else if (drop_min_education_level_table() == false) { printf("%sMin education level table drop failed.%s\n", ERROR, RESET); return false; }
     else if (drop_course_table() == false) { printf("%sCourse table drop failed.%s\n", ERROR, RESET); return false; }
     else if (drop_skill_table() == false) { printf("%sSkill table drop failed.%s\n", ERROR, RESET); return false; }
     else if (drop_passion_table() == false) { printf("%sPassion table drop failed.%s\n", ERROR, RESET); return false; }
@@ -44,23 +63,102 @@ bool drop_tables() {
     return true;
 }
 
-
-bool create_course_table() {
-    const char *sql = "CREATE TABLE IF NOT EXISTS courses (\n"
-                      "                         CourseID INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-                      "                         CourseName TEXT NOT NULL,\n"
-                      "                         Institution TEXT NOT NULL,\n"
-                      "                         Category TEXT NOT NULL, -- e.g., \"Programming\", \"Arts\"\n"
-                      "                         Description TEXT,\n"
-                      "                         Duration TEXT, -- e.g., \"3 months\", \"6 weeks\"\n"
-                      "                         Fee REAL, -- Course fee amount\n"
-                      "                         Currency TEXT DEFAULT 'USD', -- Currency code, e.g., 'USD', 'EUR'\n"
-                      "                         MinAge INTEGER, -- Minimum age to enroll\n"
-                      "                         Gender TEXT CHECK(Gender IN ('Male', 'Female', 'Any')) DEFAULT 'Any', -- Gender requirement\n"
-                      "                         MinEducationLevel TEXT -- e.g., \"High School\", \"Bachelor's\"\n"
+bool create_institution_table() {
+    const char *sql = "CREATE TABLE If Not Exists Institution (\n"
+                      "                             InstitutionID INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                      "                             InstitutionName TEXT NOT NULL UNIQUE\n"
                       ");";
 
-    if ( executeQuery(sql) == 0) {
+    char *prompt = "Institution table created successfully.";
+
+    if ( executeQuery(sql, prompt) == 0) {
+        printf("%sInstitution table creation failed.%s\n", ERROR, RESET);
+        return false;
+    }
+    return true;
+}
+
+bool create_category_table() {
+    const char *sql = "CREATE TABLE If Not Exists Category (\n"
+                      "                          CategoryID INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                      "                          Category TEXT NOT NULL UNIQUE\n"
+                      ");";
+
+    char *prompt = "Category table created successfully.";
+    if ( executeQuery(sql, prompt) == 0) {
+        printf("%sCategory table creation failed.%s\n", ERROR, RESET);
+        return false;
+    }
+    return true;
+}
+
+bool create_currency_table() {
+    const char *sql = "CREATE TABLE If Not Exists Currency (\n"
+                      "                        CurrencyID INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                      "                        CurrencyName TEXT NOT NULL UNIQUE\n"
+                      ");";
+
+    char *prompt = "Currency table created successfully.";
+    if (executeQuery(sql, prompt) == 0) {
+        printf("%sCurrency table creation failed.%s\n", ERROR, RESET);
+        return false;
+    }
+    return true;
+}
+
+bool create_gender_table() {
+    const char *sql = "CREATE TABLE If Not Exists Gender (\n"
+                      "                        GenderID INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                      "                        GenderType TEXT NOT NULL UNIQUE -- e.g., 'Male', 'Female', 'Any'\n"
+                      ");";
+    char *prompt = "Gender table created successfully.";
+
+    if ( executeQuery(sql, prompt) == 0) {
+        printf("%sGender table creation failed.%s\n", ERROR, RESET);
+        return false;
+    }
+    return true;
+}
+
+bool create_min_education_level_table() {
+    const char *sql = "CREATE TABLE If Not Exists MinEducationLevel (\n"
+                      "                                   EducationLevelID INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                      "                                   EducationLevelName TEXT NOT NULL UNIQUE -- e.g., 'High School', 'Bachelor's'\n"
+                      ");";
+
+    char *prompt = "Min education level table created successfully.";
+
+    if ( executeQuery(sql, prompt) == 0) {
+        printf("%sMin education level table creation failed.%s\n", ERROR, RESET);
+        return false;
+    }
+    return true;
+}
+
+bool create_course_table() {
+    const char *sql = "CREATE TABLE IF NOT EXISTS Courses (\n"
+                      "                         CourseID INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                      "                         CourseName TEXT NOT NULL,\n"
+                      "                         InstitutionID INTEGER,\n"
+                      "                         CategoryID INTEGER,\n"
+                      "                         Description TEXT,\n"
+                      "                         Duration TEXT,\n"
+                      "                         Fee REAL,\n"
+                      "                         CurrencyID INTEGER,\n"
+                      "                         MinAge INTEGER,\n"
+                      "                         MaxAge INTEGER,\n"
+                      "                         GenderID INTEGER,\n"
+                      "                         MinEducationLevelID INTEGER,\n"
+                      "                         FOREIGN KEY (InstitutionID) REFERENCES Institution (InstitutionID),\n"
+                      "                         FOREIGN KEY (CategoryID) REFERENCES Category (CategoryID),\n"
+                      "                         FOREIGN KEY (CurrencyID) REFERENCES Currency (CurrencyID),\n"
+                      "                         FOREIGN KEY (GenderID) REFERENCES Gender (GenderID),\n"
+                      "                         FOREIGN KEY (MinEducationLevelID) REFERENCES MinEducationLevel (EducationLevelID)\n"
+                      ");";
+
+    char *prompt = "Course table created successfully.";
+
+    if ( executeQuery(sql, prompt) == 0) {
         printf("%sCourse table creation failed.%s\n", ERROR, RESET);
         return false;
     }
@@ -73,7 +171,9 @@ bool create_skill_table() {
                       "                        SkillName TEXT NOT NULL UNIQUE\n"
                       ");";
 
-    if ( executeQuery(sql) == 0) {
+    char *prompt = "Skill table created successfully.";
+
+    if ( executeQuery(sql, prompt) == 0) {
         printf("%sSkill table creation failed.%s\n", ERROR, RESET);
         return false;
     }
@@ -86,7 +186,9 @@ bool create_passion_table() {
                       "                          PassionName TEXT NOT NULL UNIQUE\n"
                       ");";
 
-    if ( executeQuery(sql) == 0) {
+    char *prompt = "Passion table created successfully.";
+
+    if ( executeQuery(sql, prompt) == 0) {
         printf("%sPassion table creation failed.%s\n", ERROR, RESET);
         return false;
     }
@@ -102,7 +204,9 @@ bool create_course_skill_table() {
                       "                              FOREIGN KEY (SkillID) REFERENCES Skills (SkillID)\n"
                       ");";
 
-    if ( executeQuery(sql) == 0) {
+    char *prompt = "Course skill table created successfully.";
+
+    if ( executeQuery(sql, prompt) == 0) {
         printf("%sCourse skill table creation failed.%s\n", ERROR, RESET);
         return false;
     }
@@ -118,7 +222,9 @@ bool create_course_passion_table() {
                       "                                FOREIGN KEY (PassionID) REFERENCES Passions (PassionID)\n"
                       ");";
 
-    if ( executeQuery(sql) == 0) {
+    char *prompt = "Course passion table created successfully.";
+
+    if ( executeQuery(sql, prompt) == 0) {
         printf("%sCourse passion table creation failed.%s\n", ERROR, RESET);
         return false;
     }
@@ -127,7 +233,8 @@ bool create_course_passion_table() {
 
 bool drop_course_skill_table() {
     const char *sql = "DROP TABLE IF EXISTS course_skills;";
-    if ( executeQuery(sql) == 0) {
+    char *prompt = "Course skill table dropped successfully.";
+    if ( executeQuery(sql, prompt) == 0) {
         printf("%sCourse skill table drop failed.%s\n", ERROR, RESET);
         return false;
     }
@@ -136,7 +243,8 @@ bool drop_course_skill_table() {
 
 bool drop_course_passion_table() {
     const char *sql = "DROP TABLE IF EXISTS course_passions;";
-    if ( executeQuery(sql) == 0) {
+    char *prompt = "Course passion table dropped successfully.";
+    if ( executeQuery(sql, prompt) == 0) {
         printf("%sCourse passion table drop failed.%s\n", ERROR, RESET);
         return false;
     }
@@ -145,7 +253,8 @@ bool drop_course_passion_table() {
 
 bool drop_course_table() {
     const char *sql = "DROP TABLE IF EXISTS courses;";
-    if ( executeQuery(sql) == 0) {
+    char *prompt = "Courses table dropped successfully.";
+    if ( executeQuery(sql, prompt) == 0) {
         printf("%sCourse table drop failed.%s\n", ERROR, RESET);
         return false;
     }
@@ -154,7 +263,8 @@ bool drop_course_table() {
 
 bool drop_skill_table() {
     const char *sql = "DROP TABLE IF EXISTS skills;";
-    if ( executeQuery(sql) == 0) {
+    char *prompt = "Skills table dropped successfully.";
+    if ( executeQuery(sql, prompt) == 0) {
         printf("%sUser skill table drop failed.%s\n", ERROR, RESET);
         return false;
     }
@@ -163,8 +273,59 @@ bool drop_skill_table() {
 
 bool drop_passion_table() {
     const char *sql = "DROP TABLE IF EXISTS passions;";
-    if ( executeQuery(sql) == 0) {
+    char *prompt = "Passions table dropped successfully.";
+    if ( executeQuery(sql, prompt) == 0) {
         printf("%sUser passion table drop failed.%s\n", ERROR, RESET);
+        return false;
+    }
+    return true;
+}
+
+bool drop_institution_table() {
+    const char *sql = "DROP TABLE IF EXISTS institution;";
+    char *prompt = "Institution table dropped successfully.";
+    if ( executeQuery(sql, prompt) == 0) {
+        printf("%sInstitution table drop failed.%s\n", ERROR, RESET);
+        return false;
+    }
+    return true;
+}
+
+bool drop_category_table() {
+    const char *sql = "DROP TABLE IF EXISTS category;";
+    char *prompt = "Category table dropped successfully.";
+    if ( executeQuery(sql, prompt) == 0) {
+        printf("%sCategory table drop failed.%s\n", ERROR, RESET);
+        return false;
+    }
+    return true;
+}
+
+bool drop_currency_table() {
+    const char *sql = "DROP TABLE IF EXISTS currency;";
+    char *prompt = "Currency table dropped successfully.";
+    if ( executeQuery(sql, prompt) == 0) {
+        printf("%sCurrency table drop failed.%s\n", ERROR, RESET);
+        return false;
+    }
+    return true;
+}
+
+bool drop_gender_table() {
+    const char *sql = "DROP TABLE IF EXISTS gender;";
+    char *prompt = "Gender table dropped successfully.";
+    if ( executeQuery(sql, prompt) == 0) {
+        printf("%sGender table drop failed.%s\n", ERROR, RESET);
+        return false;
+    }
+    return true;
+}
+
+bool drop_min_education_level_table() {
+    const char *sql = "DROP TABLE IF EXISTS min_education_level;";
+    char *prompt = "Min education level table dropped successfully.";
+    if ( executeQuery(sql, prompt) == 0) {
+        printf("%sMin education level table drop failed.%s\n", ERROR, RESET);
         return false;
     }
     return true;

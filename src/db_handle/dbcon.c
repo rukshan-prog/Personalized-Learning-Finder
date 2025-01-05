@@ -47,15 +47,25 @@ void closeDbConnection() {
 
 
 
-// Sample query execution function
-int executeQuery(const char *query) {
+// query execution function
+int executeQuery(const char *query, char *prompt) {
     char *err_msg = NULL;
-    int rc = sqlite3_exec(db, query, NULL, NULL, &err_msg);
+    int rc = sqlite3_open("plf.db", &db);  // Open the database connection
+
+    if (rc) {
+        fprintf(stderr, "%sCan't open database: %s%s\n", ERROR, sqlite3_errmsg(db), RESET);
+        return 0; // Failure
+    }
+
+    rc = sqlite3_exec(db, query, NULL, NULL, &err_msg);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "%sSQL error: %s%s\n", ERROR, err_msg, RESET);
         sqlite3_free(err_msg);
+        sqlite3_close(db);
         return 0; // Failure
     }
-    fprintf(stdout, "%sQuery executed successfully.%s\n", SUCCESS, RESET);
+
+    fprintf(stdout, "%s%s%s\n", SUCCESS, prompt, RESET);
+    sqlite3_close(db);  // Close the database connection
     return 1; // Success
 }

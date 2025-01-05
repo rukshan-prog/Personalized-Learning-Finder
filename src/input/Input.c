@@ -128,3 +128,25 @@ char *getChoice(char *options[], int numOptions, char *prompt) {
     return options[choice];  // Return the selected option
 }
 
+// Function to get choice as integer
+int getChoiceNumber(char *options[], int numOptions, char *prompt) {
+    if (options == NULL || numOptions <= 0) {
+        printf("%s%s%s\n", ERROR, "No options provided.", RESET);
+        exit(1); // Handle invalid input
+    }
+
+    int choice;
+
+    // Display options
+    printf("%s%s:%s\n", INFO, prompt, RESET);
+    for (int i = 0; i < numOptions; ++i) {
+        if (options[i]) {
+            printf("%s%d: %s%s\n", INFO, i + 1, options[i], RESET);
+        }
+    }
+
+    // Get user choice
+    choice = getInteger("Choose an option number") - 1;  // Adjust for 0-based indexing
+
+    return choice;  // Return the selected option as an integer
+}
