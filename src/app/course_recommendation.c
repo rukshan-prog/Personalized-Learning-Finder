@@ -21,7 +21,8 @@ void searchCourses();
 void next();
 void personalRecommendations();
 
-UserData user_data;
+
+void recommend_courses_by_skills_and_passions(UserData *ptr);
 
 _Noreturn void run() {
     if (create_tables() && /*add_fake_data()*/ true) {
@@ -67,10 +68,12 @@ void control() {
 }
 
 void personalRecommendations() {
+    UserData user_data;
     system("cls");
     getUserData(&user_data); // Get user data
-
+    recommend_courses_by_skills_and_passions(&user_data);
 }
+
 
 void viewCourses() {
     system("cls");
