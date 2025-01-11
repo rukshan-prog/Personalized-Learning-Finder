@@ -44,4 +44,17 @@ void closeDbConnection();
  */
 int executeQuery(const char *query, char *prompt);
 
+
+
+
+static int callback(void *data, int argc, char **argv, char **azColName);
+
+
+
+
+
+int retrieveData(const char *query, const char *description);
+
+
+
 #endif //PERSONALIZED_LEARNING_FINDER_DBCON_H

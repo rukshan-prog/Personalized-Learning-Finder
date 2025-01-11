@@ -45,6 +45,7 @@ void control() {
     };
 
     int numOptions = sizeof(option) / sizeof(option[0]);
+
     system("cls");
     int choice = getChoiceNumber(option, numOptions, "SELECT AN OPTION IN THE MENU");
 
@@ -74,10 +75,11 @@ void personalRecommendations() {
     recommend_courses_by_skills_and_passions(&user_data);
 }
 
-
 void viewCourses() {
     system("cls");
     printf("Displaying available courses...\n");
+
+
 }
 
 void searchCourses() {

@@ -9,7 +9,7 @@
 #include <course_recommendation.h>
 #include <dbcon.h>
 
-#define MAX_QUERY_SIZE 1024
+#define MAX_QUERY_SIZE 2048
 
 void recommend_courses_by_skills_and_passions(UserData *user) {
     char query[MAX_QUERY_SIZE];
@@ -64,4 +64,18 @@ void recommend_courses_by_skills_and_passions(UserData *user) {
 
     // Finalize the statement and clean up
     sqlite3_finalize(stmt);
+}
+
+void view_all_courses_pagination(int pageNumber, int pageSize) {
+    const char *query;
+
+    if (pageNumber <= 0 || pageSize <= 0) {
+        printf("%sInvalid page number or page size.%s\n", ERROR, RESET);
+        return;
+    }
+
+    query = sqlite3_mprintf("SELECT CourseName,Duration,Fee FROM Courses LIMIT 5 OFFSET 0;", pageSize-3, (pageNumber - 1) * pageSize);
+
+
+    retrieveData(query, "Retrieving all users");
 }

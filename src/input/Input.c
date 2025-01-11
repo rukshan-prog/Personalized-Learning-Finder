@@ -1,9 +1,10 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <input.h>
 #include <errno.h>
 #include <color.h>
+#include <stdio.h>
+#include <conio.h>
 
 // Options for global use
 char* option[] = {"yes", "no"};
@@ -150,3 +151,12 @@ int getChoiceNumber(char *options[], int numOptions, char *prompt) {
 
     return choice;  // Return the selected option as an integer
 }
+
+
+
+
+int getKeyInput() {
+    int ch = _getch();
+    return ch;
+}
+

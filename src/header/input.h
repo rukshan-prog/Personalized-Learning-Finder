@@ -13,4 +13,6 @@ int getChoiceNumber(char *options[], int numOptions, char *prompt);
 
 void fixForCloseConsole();
 
+int getKeyInput();
+
 #endif //C_GROUP_PROJECT_INPUT_H

@@ -8,14 +8,28 @@
 #include <dbcon.h>
 #include <handle_tables.h>
 #include <course_recommendation.h>
+#include <output.h>
 
 
 
-// Main function
-int main(void) {
 
+int main() {
+    // run();
 
-    run();
+     //view_all_courses_pagination(1, 5);
+    //test();
+
+    while (1) {
+
+        int x = getKeyInput();
+
+        switch (x) {
+            case 72: // up
+                return "UP";
+                break;
+        }
+    }
+
 
 
     fixForCloseConsole();

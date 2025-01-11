@@ -18,5 +18,6 @@ typedef struct {
 
 _Noreturn void run();
 
+void view_all_courses_pagination(int pageNumber, int pageSize);
 
 #endif //PERSONALIZED_LEARNING_FINDER_COURSE_RECOMMENDATION_H

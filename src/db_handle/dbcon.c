@@ -5,6 +5,9 @@
 #include <color.h>
 #include <stdio.h>
 #include <dbcon.h>
+#include <string.h>
+#include <stdlib.h>
+#include <output.h>
 
 
 sqlite3 *db = NULL; // Define the global variable for the database connection
@@ -50,7 +53,8 @@ void closeDbConnection() {
 // query execution function
 int executeQuery(const char *query, char *prompt) {
     char *err_msg = NULL;
-    int rc = sqlite3_open("plf.db", &db);  // Open the database connection
+
+    bool rc = initDbConnection();
 
     if (rc) {
         fprintf(stderr, "%sCan't open database: %s%s\n", ERROR, sqlite3_errmsg(db), RESET);
@@ -61,11 +65,51 @@ int executeQuery(const char *query, char *prompt) {
     if (rc != SQLITE_OK) {
         fprintf(stderr, "%sSQL error: %s%s\n", ERROR, err_msg, RESET);
         sqlite3_free(err_msg);
-        sqlite3_close(db);
+        closeDbConnection();
         return 0; // Failure
     }
 
     fprintf(stdout, "%s%s%s\n", SUCCESS, prompt, RESET);
-    sqlite3_close(db);  // Close the database connection
+    closeDbConnection();  // Close the database connection
     return 1; // Success
 }
+
+
+
+
+
+
+
+// Function to retrieve data from the database and print as a table
+int retrieveData(const char *query, const char *description) {
+    char *err_msg = NULL;
+
+    bool rc = initDbConnection();
+    if (!rc) {
+        fprintf(stderr, "%sFailed to initialize the database connection.%s\n", ERROR, RESET);
+        return 0; // Failure
+    }
+
+    fprintf(stdout, "%sExecuting query: %s%s\n", INFO, query, RESET);
+
+    sqlite3_stmt *stmt;
+    rc = sqlite3_prepare_v2(db, query, -1, &stmt, 0);
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "%sFailed to fetch data: %s%s\n", ERROR,sqlite3_errmsg(db), RESET);
+        sqlite3_close(db);
+        return 1;
+    }
+
+
+    print_data_as_table(stmt);
+
+
+
+    // Finalize the statement and close the database
+    sqlite3_finalize(stmt);
+
+
+    closeDbConnection(); // Close the database connection
+    return 1; // Success
+}
+
