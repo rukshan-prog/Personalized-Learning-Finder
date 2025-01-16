@@ -155,8 +155,34 @@ int getChoiceNumber(char *options[], int numOptions, char *prompt) {
 
 
 
-int getKeyInput() {
+char *KeyInput() {
     int ch = _getch();
-    return ch;
+    if (ch == 0 || ch == 224) { // Extended key
+        ch = _getch();
+        if (ch == 72) {
+            return "Up Arrow";
+        } else if (ch == 75) {
+            return "Left Arrow";
+        } else if (ch == 77) {
+            return "Right Arrow";
+        } else if (ch == 80) {
+            return "Down Arrow";
+        } else {
+            return ""; // Not an arrow key
+        }
+    } else if (ch == 13) { // Enter key
+        return "Enter";
+    } else if (ch == 27 ) { // Esc
+        return "Esc";
+    } else {
+        return ""; // Not an arrow or Enter
+    }
 }
 
+
+void fixForCloseConsole()
+{
+    char c;
+    printf("\n\nPress any key to close...");
+    scanf("%c", &c);
+}

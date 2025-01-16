@@ -2,7 +2,9 @@
 #include <sqlite3.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h> // Include for malloc/free
+#include <stdlib.h>
+#include <color.h>
+#include <input.h>
 
 void print_data_as_table(sqlite3_stmt *stmt) {
     int columnCount = sqlite3_column_count(stmt);
@@ -22,8 +24,8 @@ void print_data_as_table(sqlite3_stmt *stmt) {
         maxLengths[i] = 0;
         columnNames[i] = sqlite3_column_name(stmt, i);
         if (columnNames[i]) {
-            int nameLen = strlen(columnNames[i]);
-            maxLengths[i] = nameLen;
+            unsigned int nameLen = strlen(columnNames[i]);
+            maxLengths[i] = (int) nameLen;
         }
     }
 
@@ -32,9 +34,9 @@ void print_data_as_table(sqlite3_stmt *stmt) {
         for (int i = 0; i < columnCount; i++) {
             const unsigned char *value = sqlite3_column_text(stmt, i);
             if (value) {
-                int len = strlen((const char*)value);
+                unsigned len = strlen((const char*)value);
                 if (len > maxLengths[i]) {
-                    maxLengths[i] = len;
+                    maxLengths[i] = (int) len;
                 }
             }
         }
@@ -81,8 +83,65 @@ void print_data_as_table(sqlite3_stmt *stmt) {
         }
         printf("\n");
     }
-
+    printf("\n");
     free(separator);
     free(maxLengths);
     free(columnNames);
+
+}
+
+
+void print_course_details(sqlite3_stmt *stmt) {
+    // Initialize variables
+    const char *courseName;
+    const char *description;
+    const char *duration;
+    int fee = 0;
+    const char *currency;
+    int minAge = 10;
+    int maxAge = 60;
+    const char *gender;
+    const char *minEducationLevel;
+    const char *institution;
+    const char *category;
+
+    // Get data from the statement
+    int courseID = sqlite3_column_int(stmt, 0);
+    courseName = (char *)sqlite3_column_text(stmt, 1);
+    description = (char *)sqlite3_column_text(stmt, 2);
+    duration = (char *)sqlite3_column_text(stmt, 3);
+    fee = sqlite3_column_int(stmt, 4);
+    currency = (char *)sqlite3_column_text(stmt, 5);
+    minAge = sqlite3_column_int(stmt, 6);
+    maxAge = sqlite3_column_int(stmt, 7);
+    gender = (char *)sqlite3_column_text(stmt, 8);
+    minEducationLevel = (char *)sqlite3_column_text(stmt, 9);
+    institution = (char *)sqlite3_column_text(stmt, 10);
+    category = (char *)sqlite3_column_text(stmt, 11);
+
+    // Print data
+    system("cls");
+    printf("%sCourse id:%s %d\n", WARNING, RESET, courseID);
+    printf("%sCourse Name:%s %s\n", WARNING, RESET, courseName);
+    printf("%sDescription:%s %s\n", WARNING, RESET, description);
+    printf("%sDuration:%s %s\n", WARNING, RESET, duration);
+    if (fee == 0) {
+        printf("%sFee:%s %s\n", WARNING, RESET, "Free");
+    } else {
+        printf("%sFee:%s %s %d\n", WARNING, RESET, currency, fee);
+    }
+    if (minAge == 0) {
+        printf("%sMin Age:%s %s\n", WARNING, RESET, "Any one");
+    } else {
+        printf("%sMin Age:%s %d\n", WARNING, RESET, minAge);
+    }
+    if (maxAge == 0){
+        printf("%sMax Age:%s %s\n", WARNING, RESET, "Any one");
+    } else {
+        printf("%sMax Age:%s %d\n", WARNING, RESET, maxAge);
+    }
+    printf("%sGender:%s %s\n", WARNING, RESET, gender);
+    printf("%sMin Education Level:%s %s\n", WARNING, RESET, minEducationLevel);
+    printf("%sInstitution:%s %s\n", WARNING, RESET, institution);
+    printf("%sCategory:%s %s\n", WARNING, RESET, category);
 }

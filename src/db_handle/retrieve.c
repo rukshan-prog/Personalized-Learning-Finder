@@ -1,6 +1,7 @@
 //
 // Created by Rasintha_Rukshan on 26/12/2024.
 //
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sqlite3.h>
@@ -8,74 +9,127 @@
 #include <color.h>
 #include <course_recommendation.h>
 #include <dbcon.h>
+#include <input.h>
+#include <retrieve.h>
+#include <output.h>
 
-#define MAX_QUERY_SIZE 2048
 
-void recommend_courses_by_skills_and_passions(UserData *user) {
-    char query[MAX_QUERY_SIZE];
-    sqlite3_stmt *stmt;
+void view_all_courses() {
 
-    // Build the skills condition dynamically
-    char skillsCondition[256] = "";
-    for (int i = 0; i < user -> skills.skillCount; i++) {
-        if (i > 0) strcat(skillsCondition, ", ");
-        snprintf(skillsCondition + strlen(skillsCondition),
-                 sizeof(skillsCondition) - strlen(skillsCondition),
-                 "'%s'", user -> skills.skills[i].skillName);
+    const int pageSize = 5;
+    int offset = 0;
+
+    while (1) {
+        sqlite3_stmt *stmt;
+        char *query;
+        int rows = 0;
+
+        // Count total rows
+        query = sqlite3_mprintf("SELECT COUNT(*) FROM Courses;");
+        retrieveData(query, &stmt);
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
+            rows = sqlite3_column_int(stmt, 0);
+        }
+        sqlite3_reset(stmt);
+        sqlite3_free(query);
+
+        printf("%sTotal number of courses: %d%s\n", INFO, rows, RESET);
+
+        // Fetch current page data
+        query = sqlite3_mprintf("SELECT \n"
+                                "    Courses.CourseID, \n"
+                                "    Courses.CourseName, \n"
+                                "    Category.Category\n"
+                                "FROM \n"
+                                "    Courses\n"
+                                "INNER JOIN \n"
+                                "    Category ON Courses.CategoryID = Category.CategoryID\n"
+                                "LIMIT %d OFFSET %d;", pageSize, offset);
+        retrieveData(query, &stmt);
+        print_data_as_table(stmt);
+        sqlite3_free(query);
+
+        // Display pagination
+        int pages = rows % pageSize == 0 ? rows / pageSize : (rows / pageSize) + 1;
+        int viewPage = offset / pageSize + 1;
+        printf("%sView page:%s ", INFO, RESET);
+        for (int x = 1; x <= pages; x++) {
+            if (x == viewPage) {
+                printf(" %s%d%s", SUCCESS, x, RESET);
+            } else {
+                printf(" %d", x);
+            }
+        }
+        printf("\n");
+
+        printf("%s--Use Left Arrow to go back.\n--Right Arrow to go forward.\n--Enter to select a course%s", INFO, RESET);
+
+        // Handle navigation input
+        char *key = KeyInput();
+        if (strcmp(key, "Left Arrow") == 0 && offset >= pageSize) {
+            offset -= pageSize;
+        } else if (strcmp(key, "Right Arrow") == 0 && offset + pageSize < rows) {
+            offset += pageSize;
+        } else if (strcmp(key, "Enter") == 0) {
+            // Clear screen and reset statement
+            sqlite3_reset(stmt);
+            break;
+        }
+        system("cls");
     }
 
-    // Build the passions condition dynamically
-    char passionCondition[256];
-    snprintf(passionCondition, sizeof(passionCondition), "'%s'", user -> passion);
-
-    // Construct the SQL query
-    snprintf(query, sizeof(query),
-             "SELECT c.CourseID, c.CourseName, c.Description, c.Duration, c.Fee, "
-             "COUNT(DISTINCT cs.SkillID) AS MatchingSkills, "
-             "COUNT(DISTINCT cp.PassionID) AS MatchingPassions "
-             "FROM Courses c "
-             "LEFT JOIN course_skills cs ON c.CourseID = cs.CourseID "
-             "LEFT JOIN course_passions cp ON c.CourseID = cp.CourseID "
-             "WHERE cs.SkillID IN (SELECT SkillID FROM Skills WHERE SkillName IN (%s)) "
-             "   OR cp.PassionID IN (SELECT PassionID FROM Passions WHERE PassionName = %s) "
-             "GROUP BY c.CourseID "
-             "ORDER BY (COUNT(DISTINCT cs.SkillID) + COUNT(DISTINCT cp.PassionID)) DESC, c.Fee ASC;",
-             skillsCondition, passionCondition);
-
-    // Prepare the SQL statement
-    if (sqlite3_prepare_v2(db, query, -1, &stmt, 0) != SQLITE_OK) {
-        fprintf(stderr, "%sFailed to prepare query: %s%s\n", ERROR, sqlite3_errmsg(db), RESET);
-        return;
+    // Ask user to view course details
+    char* options[] = {
+            "yes",
+            "no"
+    };
+    int numOptions = 2;
+    char* choice = getChoice(options, numOptions, "\n\nDo you want to view course details?");
+    if (strcmp(choice, "yes") == 0) {
+        view_course_details(getInteger("To view course details enter course id"));
     }
 
-    // Execute the query and fetch results
-    printf("%sRecommended Courses:%s\n", SUCCESS, RESET);
-    printf("%-10s %-30s %-10s %-10s %-10s\n", "CourseID", "CourseName", "Skills", "Passions", "Fee");
-    printf("----------------------------------------------------------------------------------\n");
-    while (sqlite3_step(stmt) == SQLITE_ROW) {
-        int courseID = sqlite3_column_int(stmt, 0);
-        const char *courseName = (const char *)sqlite3_column_text(stmt, 1);
-        int matchingSkills = sqlite3_column_int(stmt, 5);
-        int matchingPassions = sqlite3_column_int(stmt, 6);
-        double fee = sqlite3_column_double(stmt, 4);
-
-        printf("%-10d %-30s %-10d %-10d %-10.2f\n", courseID, courseName, matchingSkills, matchingPassions, fee);
-    }
-
-    // Finalize the statement and clean up
-    sqlite3_finalize(stmt);
 }
 
-void view_all_courses_pagination(int pageNumber, int pageSize) {
-    const char *query;
+void view_course_details(int courseID) {
+    sqlite3_stmt *stmt;
+    char *query;
+    query = sqlite3_mprintf("SELECT \n"
+                            "    Courses.CourseID, \n"
+                            "    Courses.CourseName, \n"
+                            "    Courses.Description, \n"
+                            "    Courses.Duration, \n"
+                            "    Courses.Fee, \n"
+                            "    Currency.CurrencyName, \n"
+                            "    Courses.MinAge, \n"
+                            "    Courses.MaxAge, \n"
+                            "    Gender.GenderType, \n"
+                            "    MinEducationLevel.EducationLevelName, \n"
+                            "    Institution.InstitutionName, \n"
+                            "    Category.Category\n"
+                            "FROM \n"
+                            "    Courses\n"
+                            "INNER JOIN \n"
+                            "    Currency ON Courses.CurrencyID = Currency.CurrencyID\n"
+                            "INNER JOIN \n"
+                            "    Gender ON Courses.GenderID = Gender.GenderID\n"
+                            "INNER JOIN \n"
+                            "    MinEducationLevel ON Courses.MinEducationLevelID = MinEducationLevel.EducationLevelID\n"
+                            "INNER JOIN \n"
+                            "    Institution ON Courses.InstitutionID = Institution.InstitutionID\n"
+                            "INNER JOIN \n"
+                            "    Category ON Courses.CategoryID = Category.CategoryID\n"
+                            "WHERE \n"
+                            "    Courses.CourseID = %d;", courseID);
+    retrieveData(query, &stmt);
+    sqlite3_reset(stmt);
 
-    if (pageNumber <= 0 || pageSize <= 0) {
-        printf("%sInvalid page number or page size.%s\n", ERROR, RESET);
-        return;
+
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        print_course_details(stmt);
+    } else{
+        printf("%sCourses Id '%d' has not exist!%s", ERROR, courseID, RESET);
     }
 
-    query = sqlite3_mprintf("SELECT CourseName,Duration,Fee FROM Courses LIMIT 5 OFFSET 0;", pageSize-3, (pageNumber - 1) * pageSize);
 
-
-    retrieveData(query, "Retrieving all users");
 }

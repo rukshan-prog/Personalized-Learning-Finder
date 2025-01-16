@@ -53,7 +53,7 @@ static int callback(void *data, int argc, char **argv, char **azColName);
 
 
 
-int retrieveData(const char *query, const char *description);
+int retrieveData(const char *query, sqlite3_stmt **pStmt);
 
 
 

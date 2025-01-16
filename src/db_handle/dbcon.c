@@ -81,7 +81,7 @@ int executeQuery(const char *query, char *prompt) {
 
 
 // Function to retrieve data from the database and print as a table
-int retrieveData(const char *query, const char *description) {
+int retrieveData(const char *query, sqlite3_stmt **pStmt) {
     char *err_msg = NULL;
 
     bool rc = initDbConnection();
@@ -96,17 +96,10 @@ int retrieveData(const char *query, const char *description) {
     rc = sqlite3_prepare_v2(db, query, -1, &stmt, 0);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "%sFailed to fetch data: %s%s\n", ERROR,sqlite3_errmsg(db), RESET);
-        sqlite3_close(db);
+        closeDbConnection();
         return 1;
     }
-
-
-    print_data_as_table(stmt);
-
-
-
-    // Finalize the statement and close the database
-    sqlite3_finalize(stmt);
+    *pStmt = stmt;
 
 
     closeDbConnection(); // Close the database connection
