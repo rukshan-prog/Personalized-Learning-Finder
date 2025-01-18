@@ -24,7 +24,7 @@ void personalRecommendations();
 UserData user_data;
 
 _Noreturn void run() {
-    if (create_tables() && /*add_fake_data()*/ true) {
+    if (create_tables() && add_fake_data() ) {
         while (true) {
             next();
             control();

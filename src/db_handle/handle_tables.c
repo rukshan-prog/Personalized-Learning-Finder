@@ -43,7 +43,7 @@ bool create_tables() {
     else if (create_passion_table() == false) { printf("%sPassion table creation failed.%s\n", ERROR, RESET); return false; }
     else if (create_course_skill_table() == false) { printf("%sCourse skill table creation failed.%s\n", ERROR, RESET); return false; }
     else if (create_course_passion_table() == false) { printf("%sCourse passion table creation failed.%s\n", ERROR, RESET); return false; }
-    else { printf("%sTables created successfully.%s\n", SUCCESS, RESET); closeDbConnection(); }
+    else { printf("%sTables created successfully.%s\n", SUCCESS, RESET); }
     return true;
 }
 
@@ -59,7 +59,7 @@ bool drop_tables() {
     else if (drop_passion_table() == false) { printf("%sPassion table drop failed.%s\n", ERROR, RESET); return false; }
     else if (drop_course_skill_table() == false) { printf("%sCourse skill table drop failed.%s\n", ERROR, RESET); return false; }
     else if (drop_course_passion_table() == false) { printf("%sCourse passion table drop failed.%s\n", ERROR, RESET); return false; }
-    else { printf("%sTables dropped successfully.%s\n", SUCCESS, RESET); closeDbConnection(); }
+    else { printf("%sTables dropped successfully.%s\n", SUCCESS, RESET); }
     return true;
 }
 
