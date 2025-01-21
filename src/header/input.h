@@ -9,10 +9,8 @@ char* getString(char *prompt);
 int getInteger(const char *prompt);
 char *getChoice(char *options[], int i, char *prompt);
 int getChoiceNumber(char *options[], int numOptions, char *prompt);
-
-
 void fixForCloseConsole();
-
 char* KeyInput();
+char* getStringWithoutVerification(char *prompt);
 
 #endif //C_GROUP_PROJECT_INPUT_H

@@ -5,6 +5,7 @@
 
 #include <stdbool.h>
 #include <dbcon.h>
+#include <handle_tables.h>
 
 bool add_fake_data() {
 
@@ -276,9 +277,10 @@ char *sql2 = "-- Insert courses into the Courses table\n"
              "INSERT INTO course_passions (CourseID, PassionID) VALUES \n"
              "(1, 1), (1, 2), (2, 3), (2, 4), (3, 5), (4, 6), (5, 7), (6, 8), (6, 9), (7, 10);";
 
+    drop_tables();
+    create_tables();
     executeQuery(sql1, "Inserting data into individual table successful.");
     executeQuery(sql2, "Inserting 100 rows into courses table successful.");
-
 
 
 return true;

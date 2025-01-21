@@ -14,6 +14,6 @@ int count_rows(sqlite3_stmt *stmt);
 
 void view_course_details(int courseID);
 
-
+void search_courses();
 
 #endif //PERSONALIZED_LEARNING_FINDER_RETRIEVE_H

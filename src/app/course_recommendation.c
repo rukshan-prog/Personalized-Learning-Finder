@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <input.h>
 #include <color.h>
-
+#include <retrieve.h>
 
 
 void control();
@@ -21,11 +21,9 @@ void searchCourses();
 void next();
 void personalRecommendations();
 
-
-void recommend_courses_by_skills_and_passions(UserData *ptr);
-
+// Run the application
 _Noreturn void run() {
-    if (/*create_tables() && add_fake_data() */true) {
+    if (add_fake_data()) {
         while (true) {
             next();
             control();
@@ -35,6 +33,7 @@ _Noreturn void run() {
     exit(0);
 }
 
+// Display the main menu
 void control() {
 
     char *option[] = {
@@ -68,26 +67,30 @@ void control() {
     }
 }
 
+// Show personal recommendations
 void personalRecommendations() {
     UserData user_data;
     system("cls");
     getUserData(&user_data); // Get user data
-    //recommend_courses_by_skills_and_passions(&user_data);
+    recommend_courses_by_skills_and_passions(&user_data);
 }
 
+// View all courses
 void viewCourses() {
     system("cls");
     view_all_courses();
 }
 
+// Search for a course
 void searchCourses() {
     system("cls");
-    printf("Displaying available courses...\n");
+    search_courses();
 }
 
+// Press enter key to continue
 void next() {
     char c;
-    printf("\n\nPress any key to continue...");
+    printf("\n\nPress Enter key to continue...");
     scanf("%c", &c);
 }
 

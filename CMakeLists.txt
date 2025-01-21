@@ -40,6 +40,8 @@ add_executable(plf main.c
         src/db_handle/fake_data.c
         src/header/fake_data.h
         src/header/main.h
+        src/filehandel/errrorlog.c
+        src/header/errrorlog.h
 )
 
 # Add SQLite library path

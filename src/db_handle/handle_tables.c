@@ -32,34 +32,45 @@ bool drop_min_education_level_table();
 
 
 bool create_tables() {
-    if (initDbConnection() == false) { printf("%sDatabase connection failed.%s\n", ERROR, RESET); return false; }
-    else if (create_institution_table() == false) { printf("%sInstitution table creation failed.%s\n", ERROR, RESET); return false; }
-    else if (create_category_table() == false) { printf("%sCategory table creation failed.%s\n", ERROR, RESET); return false; }
-    else if (create_currency_table() == false) { printf("%sCurrency table creation failed.%s\n", ERROR, RESET); return false; }
-    else if (create_gender_table() == false) { printf("%sGender table creation failed.%s\n", ERROR, RESET); return false; }
-    else if (create_min_education_level_table() == false) { printf("%sMin education level table creation failed.%s\n", ERROR, RESET); return false; }
-    else if (create_course_table() == false) { printf("%sCourse table creation failed.%s\n", ERROR, RESET); return false; }
-    else if (create_skill_table() == false) { printf("%sSkill table creation failed.%s\n", ERROR, RESET); return false; }
-    else if (create_passion_table() == false) { printf("%sPassion table creation failed.%s\n", ERROR, RESET); return false; }
-    else if (create_course_skill_table() == false) { printf("%sCourse skill table creation failed.%s\n", ERROR, RESET); return false; }
-    else if (create_course_passion_table() == false) { printf("%sCourse passion table creation failed.%s\n", ERROR, RESET); return false; }
-    else { printf("%sTables created successfully.%s\n", SUCCESS, RESET); closeDbConnection(); }
+
+    // Create all required tables in order
+    if (!create_institution_table() ||
+        !create_category_table() ||
+        !create_currency_table() ||
+        !create_gender_table() ||
+        !create_min_education_level_table() ||
+        !create_course_table() ||
+        !create_skill_table() ||
+        !create_passion_table() ||
+        !create_course_skill_table() ||
+        !create_course_passion_table()) {
+        return false;
+    }
+
+    printf("%sTables created successfully.%s\n", SUCCESS, RESET);
+
+    closeDbConnection();
     return true;
 }
 
+
 bool drop_tables() {
-    if (initDbConnection() == false) { printf("%sDatabase connection failed.%s\n", ERROR, RESET); return false; }
-    else if (drop_institution_table() == false) { printf("%sInstitution table drop failed.%s\n", ERROR, RESET); return false; }
-    else if (drop_category_table() == false) { printf("%sCategory table drop failed.%s\n", ERROR, RESET); return false; }
-    else if (drop_currency_table() == false) { printf("%sCurrency table drop failed.%s\n", ERROR, RESET); return false; }
-    else if (drop_gender_table() == false) { printf("%sGender table drop failed.%s\n", ERROR, RESET); return false; }
-    else if (drop_min_education_level_table() == false) { printf("%sMin education level table drop failed.%s\n", ERROR, RESET); return false; }
-    else if (drop_course_table() == false) { printf("%sCourse table drop failed.%s\n", ERROR, RESET); return false; }
-    else if (drop_skill_table() == false) { printf("%sSkill table drop failed.%s\n", ERROR, RESET); return false; }
-    else if (drop_passion_table() == false) { printf("%sPassion table drop failed.%s\n", ERROR, RESET); return false; }
-    else if (drop_course_skill_table() == false) { printf("%sCourse skill table drop failed.%s\n", ERROR, RESET); return false; }
-    else if (drop_course_passion_table() == false) { printf("%sCourse passion table drop failed.%s\n", ERROR, RESET); return false; }
-    else { printf("%sTables dropped successfully.%s\n", SUCCESS, RESET); closeDbConnection(); }
+
+    if (!drop_institution_table() ||
+        !drop_category_table() ||
+        !drop_currency_table() ||
+        !drop_gender_table() ||
+        !drop_min_education_level_table() ||
+        !drop_course_table() ||
+        !drop_skill_table() ||
+        !drop_passion_table() ||
+        !drop_course_skill_table() ||
+        !drop_course_passion_table()) {
+        printf("%sOne or more tables failed to drop.%s\n", ERROR, RESET);
+        return false;
+    }
+
+    printf("%sTables dropped successfully.%s\n", SUCCESS, RESET);
     return true;
 }
 
@@ -322,7 +333,7 @@ bool drop_gender_table() {
 }
 
 bool drop_min_education_level_table() {
-    const char *sql = "DROP TABLE IF EXISTS min_education_level;";
+    const char *sql = "DROP TABLE IF EXISTS MinEducationLevel;";
     char *prompt = "Min education level table dropped successfully.";
     if ( executeQuery(sql, prompt) == 0) {
         printf("%sMin education level table drop failed.%s\n", ERROR, RESET);

@@ -16,25 +16,20 @@ sqlite3 *db = NULL; // Define the global variable for the database connection
 
 // Initialize the database connection
 bool initDbConnection() {
-
     const char *db_name = "plf.db";
 
-    fprintf(stdout, "%sInitializing database connection...%s\n", INFO, RESET);
+    int rc = sqlite3_open(db_name, &db);
 
-    if (db) {
-        fprintf(stdout, "%sDatabase connection already initialized.%s\n", INFO, RESET);
-        return true;
-    } else {
-        int rc = sqlite3_open(db_name, &db);
-        if (rc) {
-            fprintf(stderr, "%sCan't open database: %s%s\n", ERROR, sqlite3_errmsg(db), RESET);
-            return false; // Failure
-        } else {
-            fprintf(stdout, "%sDatabase connection opened successfully.%s\n", SUCCESS, RESET);
-            return true;
-        }
+    if (rc != SQLITE_OK) {
+        fprintf(stderr, "%sCan't open database: %s%s\n", ERROR, sqlite3_errmsg(db), RESET);
+        db = NULL;
+        return false;
     }
+
+    fprintf(stdout, "%sDatabase connection opened successfully.%s\n", SUCCESS, RESET);
+    return true;
 }
+
 
 
 
@@ -54,24 +49,19 @@ void closeDbConnection() {
 int executeQuery(const char *query, char *prompt) {
     char *err_msg = NULL;
 
-    bool rc = initDbConnection();
+    bool rc;
 
-    if (rc) {
-        fprintf(stderr, "%sCan't open database: %s%s\n", ERROR, sqlite3_errmsg(db), RESET);
-        return 0; // Failure
-    }
-
+    initDbConnection();
     rc = sqlite3_exec(db, query, NULL, NULL, &err_msg);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "%sSQL error: %s%s\n", ERROR, err_msg, RESET);
         sqlite3_free(err_msg);
-        closeDbConnection();
-        return 0; // Failure
+        return 0;
     }
 
     fprintf(stdout, "%s%s%s\n", SUCCESS, prompt, RESET);
-    closeDbConnection();  // Close the database connection
-    return 1; // Success
+    closeDbConnection();
+    return 1;
 }
 
 
@@ -96,13 +86,13 @@ int retrieveData(const char *query, sqlite3_stmt **pStmt) {
     rc = sqlite3_prepare_v2(db, query, -1, &stmt, 0);
     if (rc != SQLITE_OK) {
         fprintf(stderr, "%sFailed to fetch data: %s%s\n", ERROR,sqlite3_errmsg(db), RESET);
-        closeDbConnection();
+        //closeDbConnection();
         return 1;
     }
     *pStmt = stmt;
 
 
-    closeDbConnection(); // Close the database connection
+    //closeDbConnection(); // Close the database connection
     return 1; // Success
 }
 

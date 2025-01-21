@@ -52,6 +52,37 @@ char* getString(char *prompt) {
     return str;
 }
 
+// Function to get strung without verifying
+char* getStringWithoutVerification(char *prompt) {
+    char *str;
+
+    // Check if the prompt is not empty
+    if (strcmp(prompt, "") != 0) {
+        printf("%s%s :%s", INPUT, prompt, RESET);
+    } else {
+        printf("%s%s :%s", INPUT, "Enter a string", RESET);
+    }
+
+
+
+    // Allocate memory for the string length of 100
+    str = malloc(100);
+
+    // Check if the memory allocation was successful
+    if (str == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        exit(EXIT_FAILURE);
+    }
+
+    // Read the string
+    fgets(str, 100, stdin);
+    // Remove newline character
+    str[strcspn(str, "\n")] = '\0';
+
+
+    return str;
+}
+
 
 // Function to get an integer
 int getInteger(const char *prompt) {
@@ -183,6 +214,6 @@ char *KeyInput() {
 void fixForCloseConsole()
 {
     char c;
-    printf("\n\nPress any key to close...");
+    printf("\n\nPress enter key to close...");
     scanf("%c", &c);
 }

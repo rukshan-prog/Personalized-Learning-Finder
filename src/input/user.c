@@ -14,10 +14,9 @@ char* getGender();
 int getAge();
 char *getEducationLevel();
 void displayUserData(UserData *userData);
-void wait();
 
 
-
+// Get user data
 void getUserData(UserData *userData) {
 
     // Initialize userData to avoid undefined behavior
@@ -130,26 +129,40 @@ int getAge() {
     return age;
 }
 
+// Get name from user
 char* getName() {
-    wait();
-    return "Fake name";
+    char *name;
+    name = getString("Enter Your Name");
+    return name;
 }
 
+// Get gender from user
 char* getGender() {
-    wait();
-    return "male";
+    char* options[] = {
+            "male",
+            "female"
+    };
+    int numOptions = 2;
+    char* choice = getChoice(options, numOptions, "Select your gender");
+    return choice;
 }
 
+// Get education level from user
 char *getEducationLevel() {
-    wait();
-    return "A/L";
+    char* options[] = {
+            "O/L",
+            "A/L",
+            "Master",
+            "Bachelor",
+            "PhD"
+    };
+    int numOptions = 2;
+    char* choice = getChoice(options, numOptions, "Select your highest education level");
+
+    return choice;
 }
 
-// For testing purposes
-void wait() {
-    char c;
-    scanf("%c", &c);
-}
+
 
 
 
