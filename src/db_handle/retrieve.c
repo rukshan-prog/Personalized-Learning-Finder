@@ -208,7 +208,7 @@ void search_courses() {
     }
 }
 
-void recommend_courses_by_skills_and_passions(UserData *userData) {
+/*void recommend_courses_by_skills_and_passions(UserData *userData) {
     const int pageSize = 10;
     int offset = 0;
 
@@ -270,18 +270,16 @@ void recommend_courses_by_skills_and_passions(UserData *userData) {
         // Prepare the statement
         sqlite3_prepare_v2(db, query, -1, &stmt, NULL);
 
-        // Bind user inputs (Passions, Skills, Skill Levels)
-        sqlite3_bind_text(stmt, 1, "Passion1", -1, SQLITE_STATIC); // 1st passion
-        sqlite3_bind_text(stmt, 2, "Skill1", -1, SQLITE_STATIC);   // 1st skill
-        sqlite3_bind_int(stmt, 3, 3);                             // 1st skill level
-        sqlite3_bind_text(stmt, 4, "Passion2", -1, SQLITE_STATIC); // 2nd passion
-        sqlite3_bind_text(stmt, 5, "Skill2", -1, SQLITE_STATIC);   // 2nd skill
-        sqlite3_bind_int(stmt, 6, 5);                             // 2nd skill level
+        // Bind user inputs (Passion, Skills, Skill Levels)
+        sqlite3_bind_text(stmt, 1, userData->passion, -1, SQLITE_STATIC); // User passion
+        for (int i = 0; i < userData->skills.skillCount; i++) {
+            sqlite3_bind_text(stmt, 2 + i * 3, userData->skills.skills[i].skillName, -1, SQLITE_STATIC); // Skill name
+            sqlite3_bind_int(stmt, 3 + i * 3, atoi(userData->skills.skills[i].level));                  // Skill level
+        }
 
         // Bind pagination parameters
-        sqlite3_bind_int(stmt, 7, pageSize);  // Limit
-        sqlite3_bind_int(stmt, 8, offset);   // Offset
-
+        sqlite3_bind_int(stmt, 7, pageSize); // Limit
+        sqlite3_bind_int(stmt, 8, offset);  // Offset
 
         retrieveData(query, &stmt);
         print_data_as_table(stmt);
@@ -317,14 +315,92 @@ void recommend_courses_by_skills_and_passions(UserData *userData) {
     }
 
     // Ask user to view course details
-    char* options[] = {
-            "yes",
-            "no"
-    };
+    char *options[] = {"yes", "no"};
     int numOptions = 2;
-    char* choice = getChoice(options, numOptions, "\n\nDo you want to view course details?");
+    char *choice = getChoice(options, numOptions, "\n\nDo you want to view course details?");
     if (strcmp(choice, "yes") == 0) {
         view_course_details(getInteger("To view course details enter course id"));
     }
+}
+*/
 
+void recommend_courses_by_skills_and_passions(UserData *userData) {
+    const int pageSize = 10;
+    int offset = 0;
+
+    while (1) {
+        sqlite3_stmt *stmt;
+        char *query;
+        int rows = 0;
+
+        // Count total rows
+        query = sqlite3_mprintf("SELECT COUNT(*) FROM Courses;");
+        retrieveData(query, &stmt);
+        if (sqlite3_step(stmt) == SQLITE_ROW) {
+            rows = sqlite3_column_int(stmt, 0);
+        }
+        sqlite3_reset(stmt);
+        sqlite3_free(query);
+
+        printf("%sTotal number of courses: %d%s\n", INFO, rows, RESET);
+
+        // Fetch current page data
+        query = sqlite3_mprintf(
+                ""
+        );
+
+        // Prepare the statement
+        sqlite3_prepare_v2(db, query, -1, &stmt, NULL);
+
+        // Bind user inputs (Passion, Skills, Skill Levels)
+        sqlite3_bind_text(stmt, 1, userData->passion, -1, SQLITE_STATIC); // User passion
+        for (int i = 0; i < userData->skills.skillCount; i++) {
+            sqlite3_bind_text(stmt, 2 + i * 3, userData->skills.skills[i].skillName, -1, SQLITE_STATIC); // Skill name
+            sqlite3_bind_int(stmt, 3 + i * 3, atoi(userData->skills.skills[i].level));                  // Skill level
+        }
+
+        // Bind pagination parameters
+        sqlite3_bind_int(stmt, 7, pageSize); // Limit
+        sqlite3_bind_int(stmt, 8, offset);  // Offset
+
+        retrieveData(query, &stmt);
+        print_data_as_table(stmt);
+        sqlite3_free(query);
+
+        // Display pagination
+        int pages = rows % pageSize == 0 ? rows / pageSize : (rows / pageSize) + 1;
+        int viewPage = offset / pageSize + 1;
+        printf("%sView page:%s ", INFO, RESET);
+        for (int x = 1; x <= pages; x++) {
+            if (x == viewPage) {
+                printf(" %s%d%s", SUCCESS, x, RESET);
+            } else {
+                printf(" %d", x);
+            }
+        }
+        printf("\n");
+
+        printf("%s--Use Left Arrow to go back. \n--Right Arrow to go forward.\n--Enter to select a course%s", INFO, RESET);
+
+        // Handle navigation input
+        char *key = KeyInput();
+        if (strcmp(key, "Left Arrow") == 0 && offset >= pageSize) {
+            offset -= pageSize;
+        } else if (strcmp(key, "Right Arrow") == 0 && offset + pageSize < rows) {
+            offset += pageSize;
+        } else if (strcmp(key, "Enter") == 0) {
+            // Clear screen and reset statement
+            sqlite3_reset(stmt);
+            break;
+        }
+        system("cls");
+    }
+
+    // Ask user to view course details
+    char *options[] = {"yes", "no"};
+    int numOptions = 2;
+    char *choice = getChoice(options, numOptions, "\n\nDo you want to view course details?");
+    if (strcmp(choice, "yes") == 0) {
+        view_course_details(getInteger("To view course details enter course id"));
+    }
 }

@@ -6,6 +6,7 @@
 #include <time.h>
 #include <string.h>
 #include <color.h>
+#include <stdlib.h>
 
 
 
@@ -21,7 +22,11 @@
  * @param message The error message to be logged.
  */
 void logError(const char *message) {
-    // File pointer for the log file
+
+    // clear screen
+    system("cls");
+
+    // Open log file
     FILE *file = fopen("error_log.txt", "a"); // Open the file in append mode
     if (file == NULL) {
         fprintf(stderr, "Failed to open log file.\n");
@@ -65,7 +70,7 @@ void readErrors() {
         printf("%s", line);
     }
 
-    printf("---- End of Log ----\n");
+    printf("\n---- End of Log ----\n");
 
     fclose(file);
 }

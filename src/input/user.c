@@ -150,13 +150,15 @@ char* getGender() {
 // Get education level from user
 char *getEducationLevel() {
     char* options[] = {
+            "Primary",
             "O/L",
             "A/L",
-            "Master",
             "Bachelor",
-            "PhD"
+            "Master",
+            "PHD",
+            "Any"
     };
-    int numOptions = 2;
+    int numOptions = sizeof(options) / sizeof(options[0]);
     char* choice = getChoice(options, numOptions, "Select your highest education level");
 
     return choice;

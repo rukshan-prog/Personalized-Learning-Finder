@@ -13,6 +13,7 @@
 #include <input.h>
 #include <color.h>
 #include <retrieve.h>
+#include <errrorlog.h>
 
 
 void control();
@@ -33,13 +34,14 @@ _Noreturn void run() {
     exit(0);
 }
 
-// Display the main menu
+// Control the application
 void control() {
 
     char *option[] = {
             "View Courses",
             "Search Courses",
-            "Personal Recommendations",
+            "Find Personal Recommendations",
+            "Read application issues",
             "Exit"
     };
 
@@ -59,7 +61,10 @@ void control() {
             personalRecommendations();
             break;
         case 3:
-            exit(0);
+            readErrors();
+            break;
+        case 4:
+            exit(1);
             break;
         default:
             printf("%sInvalid Number Please try again%s\n", WARNING, RESET);

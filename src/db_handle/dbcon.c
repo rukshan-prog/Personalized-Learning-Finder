@@ -14,6 +14,7 @@ sqlite3 *db = NULL; // Define the global variable for the database connection
 
 
 
+
 // Initialize the database connection
 bool initDbConnection() {
     const char *db_name = "plf.db";

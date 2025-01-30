@@ -23,9 +23,3 @@ int main() {
     fixForCloseConsole();
     return 0;
 }
-
-
-
-// close console
-
-
