@@ -2,12 +2,13 @@
 // Created by Rasintha_Rukshan on 23/12/2024.
 //
 
-#include <stdlib.h>
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <dbcon.h>
 #include <color.h>
 #include <handle_tables.h>
+#include <errrorlog.h>
 
 bool create_institution_table();
 bool create_category_table();
@@ -44,10 +45,12 @@ bool create_tables() {
         !create_passion_table() ||
         !create_course_skill_table() ||
         !create_course_passion_table()) {
+        printf("%sOne or more tables failed to create.%s\n", ERROR, RESET);
+        logError("One or more tables failed to create");
         return false;
     }
 
-    printf("%sTables created successfully.%s\n", SUCCESS, RESET);
+    //printf("%sTables created successfully.%s\n", SUCCESS, RESET);
 
     closeDbConnection();
     return true;
@@ -67,10 +70,11 @@ bool drop_tables() {
         !drop_course_skill_table() ||
         !drop_course_passion_table()) {
         printf("%sOne or more tables failed to drop.%s\n", ERROR, RESET);
+        logError("One or more tables failed to drop");
         return false;
     }
 
-    printf("%sTables dropped successfully.%s\n", SUCCESS, RESET);
+    //printf("%sTables dropped successfully.%s\n", SUCCESS, RESET);
     return true;
 }
 
@@ -148,23 +152,24 @@ bool create_min_education_level_table() {
 
 bool create_course_table() {
     const char *sql = "CREATE TABLE IF NOT EXISTS Courses (\n"
-                      "                         CourseID INTEGER PRIMARY KEY AUTOINCREMENT,\n"
-                      "                         CourseName TEXT NOT NULL,\n"
-                      "                         InstitutionID INTEGER,\n"
-                      "                         CategoryID INTEGER,\n"
-                      "                         Description TEXT,\n"
-                      "                         Duration TEXT,\n"
-                      "                         Fee REAL,\n"
-                      "                         CurrencyID INTEGER,\n"
-                      "                         MinAge INTEGER,\n"
-                      "                         MaxAge INTEGER,\n"
-                      "                         GenderID INTEGER,\n"
-                      "                         MinEducationLevelID INTEGER,\n"
-                      "                         FOREIGN KEY (InstitutionID) REFERENCES Institution (InstitutionID),\n"
-                      "                         FOREIGN KEY (CategoryID) REFERENCES Category (CategoryID),\n"
-                      "                         FOREIGN KEY (CurrencyID) REFERENCES Currency (CurrencyID),\n"
-                      "                         FOREIGN KEY (GenderID) REFERENCES Gender (GenderID),\n"
-                      "                         FOREIGN KEY (MinEducationLevelID) REFERENCES MinEducationLevel (EducationLevelID)\n"
+                      "    CourseID INTEGER PRIMARY KEY AUTOINCREMENT,\n"
+                      "    CourseName TEXT NOT NULL,\n"
+                      "    InstitutionID INTEGER,\n"
+                      "    CategoryID INTEGER,\n"
+                      "    Description TEXT,\n"
+                      "    Duration TEXT,\n"
+                      "    Fee REAL,\n"
+                      "    CurrencyID INTEGER,\n"
+                      "    MinAge INTEGER,\n"
+                      "    MaxAge INTEGER,\n"
+                      "    GenderID INTEGER,\n"
+                      "    MinEducationLevelID INTEGER,\n"
+                      "    Level TEXT DEFAULT NULL,\n"
+                      "    FOREIGN KEY (InstitutionID) REFERENCES Institution (InstitutionID),\n"
+                      "    FOREIGN KEY (CategoryID) REFERENCES Category (CategoryID),\n"
+                      "    FOREIGN KEY (CurrencyID) REFERENCES Currency (CurrencyID),\n"
+                      "    FOREIGN KEY (GenderID) REFERENCES Gender (GenderID),\n"
+                      "    FOREIGN KEY (MinEducationLevelID) REFERENCES MinEducationLevel (EducationLevelID)\n"
                       ");";
 
     char *prompt = "Course table created successfully.";

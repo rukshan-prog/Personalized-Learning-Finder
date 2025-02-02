@@ -1,3 +1,7 @@
+//
+// Created by Rasintha_Rukshan on 9/7/2024.
+//
+
 #include <stdlib.h>
 #include <string.h>
 #include <input.h>
@@ -83,7 +87,6 @@ char* getStringWithoutVerification(char *prompt) {
     return str;
 }
 
-
 // Function to get an integer
 int getInteger(const char *prompt) {
     char buffer[256]; // Buffer for user input
@@ -126,7 +129,6 @@ int getInteger(const char *prompt) {
         return (int)value;
     }
 }
-
 
 // Function to get a choice
 char *getChoice(char *options[], int numOptions, char *prompt) {
@@ -183,9 +185,7 @@ int getChoiceNumber(char *options[], int numOptions, char *prompt) {
     return choice;  // Return the selected option as an integer
 }
 
-
-
-
+// Function to get a key
 char *KeyInput() {
     int ch = _getch();
     if (ch == 0 || ch == 224) { // Extended key
@@ -210,7 +210,7 @@ char *KeyInput() {
     }
 }
 
-
+// Function to fix console close
 void fixForCloseConsole()
 {
     char c;

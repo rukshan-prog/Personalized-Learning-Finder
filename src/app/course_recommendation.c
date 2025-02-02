@@ -1,5 +1,5 @@
 //
-// Created by Rasintha_Rukshan on 24/12/2024.
+// Created by Sahan Prabodha on 24/12/2024.
 //
 
 
@@ -14,6 +14,7 @@
 #include <color.h>
 #include <retrieve.h>
 #include <errrorlog.h>
+#include <string.h>
 
 
 void control();

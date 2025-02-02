@@ -32,7 +32,6 @@ add_executable(plf main.c
         src/output/output.c
         src/header/output.h
         src/header/courses.h
-        src/db_handle/inseart.c
         src/header/inseart.h
         src/db_handle/retrieve.c
         src/header/retrieve.h

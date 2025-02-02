@@ -118,12 +118,12 @@ int getAge() {
         age = getInteger("Enter Your Age");
 
         // Check if age is within valid range
-        if (40 >= age && age >= 10) {
+        if (80 >= age && age >= 10) {
             // Print success message with user's age
             printf("%sYou entered your age : %d%s\n\n", SUCCESS, age, RESET);
             break;
         }else {
-            printf("%s Invalid age please enter an age between 10 and 40  %s\n\n", ERROR, RESET);
+            printf("%s Invalid age please enter an age between 10 and 80  %s\n\n", ERROR, RESET);
         }
     }
     return age;
@@ -139,8 +139,8 @@ char* getName() {
 // Get gender from user
 char* getGender() {
     char* options[] = {
-            "male",
-            "female"
+            "Male",
+            "Female"
     };
     int numOptions = 2;
     char* choice = getChoice(options, numOptions, "Select your gender");
@@ -150,13 +150,11 @@ char* getGender() {
 // Get education level from user
 char *getEducationLevel() {
     char* options[] = {
-            "Primary",
             "O/L",
             "A/L",
             "Bachelor",
             "Master",
-            "PHD",
-            "Any"
+            "PHD"
     };
     int numOptions = sizeof(options) / sizeof(options[0]);
     char* choice = getChoice(options, numOptions, "Select your highest education level");

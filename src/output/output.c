@@ -95,6 +95,7 @@ void print_course_details(sqlite3_stmt *stmt) {
     // Initialize variables
     const char *courseName;
     const char *description;
+    const char *level;
     const char *duration;
     int fee = 0;
     const char *currency;
@@ -109,21 +110,23 @@ void print_course_details(sqlite3_stmt *stmt) {
     int courseID = sqlite3_column_int(stmt, 0);
     courseName = (char *)sqlite3_column_text(stmt, 1);
     description = (char *)sqlite3_column_text(stmt, 2);
-    duration = (char *)sqlite3_column_text(stmt, 3);
-    fee = sqlite3_column_int(stmt, 4);
-    currency = (char *)sqlite3_column_text(stmt, 5);
-    minAge = sqlite3_column_int(stmt, 6);
-    maxAge = sqlite3_column_int(stmt, 7);
-    gender = (char *)sqlite3_column_text(stmt, 8);
-    minEducationLevel = (char *)sqlite3_column_text(stmt, 9);
-    institution = (char *)sqlite3_column_text(stmt, 10);
-    category = (char *)sqlite3_column_text(stmt, 11);
+    level = (char *)sqlite3_column_text(stmt, 3);
+    duration = (char *)sqlite3_column_text(stmt, 4);
+    fee = sqlite3_column_int(stmt, 5);
+    currency = (char *)sqlite3_column_text(stmt, 6);
+    minAge = sqlite3_column_int(stmt, 7);
+    maxAge = sqlite3_column_int(stmt, 8);
+    gender = (char *)sqlite3_column_text(stmt, 9);
+    minEducationLevel = (char *)sqlite3_column_text(stmt, 10);
+    institution = (char *)sqlite3_column_text(stmt, 11);
+    category = (char *)sqlite3_column_text(stmt, 12);
 
     // Print data
     system("cls");
     printf("%sCourse id:%s %d\n", WARNING, RESET, courseID);
     printf("%sCourse Name:%s %s\n", WARNING, RESET, courseName);
     printf("%sDescription:%s %s\n", WARNING, RESET, description);
+    printf("%sLevel:%s %s\n", WARNING, RESET, level);
     printf("%sDuration:%s %s\n", WARNING, RESET, duration);
     if (fee == 0) {
         printf("%sFee:%s %s\n", WARNING, RESET, "Free");

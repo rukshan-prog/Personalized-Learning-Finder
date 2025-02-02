@@ -1,25 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <input.h>
-#include <skill.h>
-#include <passion.h>
-#include <color.h>
-#include <user.h>
-#include <dbcon.h>
-#include <handle_tables.h>
+//
+//  Created by Rasintha_Rukshan on 17/12/2024..
+//
+
 #include <course_recommendation.h>
-#include <output.h>
-#include <errrorlog.h>
-#include <fake_data.h>
-
-
 
 
 int main() {
+
+    // start the application
     run();
 
-
-
-    fixForCloseConsole();
     return 0;
 }

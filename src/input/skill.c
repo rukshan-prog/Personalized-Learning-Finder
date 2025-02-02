@@ -1,5 +1,5 @@
 //
-// Created by Rasintha_Rukshan on 22/12/2024.
+// Created by Samitha dilum on 22/12/2024.
 //
 
 
@@ -34,7 +34,7 @@ Skills* getSkill() {
             }
         }
 
-        // Allocate memory for dynamic skills
+        // Allocate memory first for dynamic skills structer
         skills = (Skills*)malloc(skillCount * sizeof(Skills));
 
         // Check if the memory allocation was successful

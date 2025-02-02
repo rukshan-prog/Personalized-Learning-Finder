@@ -1,5 +1,5 @@
 //
-// Created by Rasintha_Rukshan on 20/01/2025.
+// Created by isuru on 20/01/2025.
 //
 
 #include <stdio.h>
@@ -28,6 +28,8 @@ void logError(const char *message) {
 
     // Open log file
     FILE *file = fopen("error_log.txt", "a"); // Open the file in append mode
+
+    // Check if the file opened successfully
     if (file == NULL) {
         fprintf(stderr, "Failed to open log file.\n");
         return;
@@ -57,7 +59,9 @@ void logError(const char *message) {
  * error messages to the standard output.
  */
 void readErrors() {
-    FILE *file = fopen("error_log.txt", "r");
+
+    // open log file
+    FILE *file = fopen("error_log.txt", "r"); // Open the file in read mode
     if (file == NULL) {
         fprintf(stderr, "Failed to open log file for reading.\n");
         return;

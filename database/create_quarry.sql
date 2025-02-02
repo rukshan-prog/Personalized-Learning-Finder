@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS Courses (
     MaxAge INTEGER,
     GenderID INTEGER,
     MinEducationLevelID INTEGER,
+    Level TEXT DEFAULT NULL,
     FOREIGN KEY (InstitutionID) REFERENCES Institution (InstitutionID),
     FOREIGN KEY (CategoryID) REFERENCES Category (CategoryID),
     FOREIGN KEY (CurrencyID) REFERENCES Currency (CurrencyID),
