@@ -39,8 +39,22 @@ void closeDbConnection();
  * Execute a query on the database
  *
  * @param query The query to execute
+ * @param prompt for the success
  *
  */
-int executeQuery(const char *query);
+int executeQuery(const char *query, char *prompt);
+
+
+
+
+static int callback(void *data, int argc, char **argv, char **azColName);
+
+
+
+
+
+int retrieveData(const char *query, sqlite3_stmt **pStmt);
+
+
 
 #endif //PERSONALIZED_LEARNING_FINDER_DBCON_H

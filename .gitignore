@@ -41,11 +41,12 @@ cmake-build-release/
 # CMake-generated test files
 Testing/
 
+
 # Compiled object files
-*.o
-*.obj
-*.lo
-*.slo
+#*.o
+#*.obj
+#*.lo
+#*.slo
 
 # Executable files
 *.exe
@@ -97,4 +98,5 @@ npm-debug.log*
 yarn-error.log*
 package-lock.json
 yarn.lock
+
 

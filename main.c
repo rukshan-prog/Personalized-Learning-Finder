@@ -1,35 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <input.h>
-#include <skill.h>
-#include <passion.h>
-#include <color.h>
-#include <user.h>
-#include <dbcon.h>
-#include <handle_tables.h>
+//
+//  Created by Rasintha_Rukshan on 17/12/2024..
+//
+
 #include <course_recommendation.h>
 
 
+int main() {
 
-int main(void) {
+    // start the application
+    run();
 
-
-
-    create_tables();
-    drop_tables();
-
-
-    fixForCloseConsole();
     return 0;
-}
-
-
-
-
-
-// close console
-void fixForCloseConsole() {
-    char c;
-    printf("Press any key to close...");
-    scanf("%c", &c);
 }

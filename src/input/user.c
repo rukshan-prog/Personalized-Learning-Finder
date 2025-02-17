@@ -1,76 +1,170 @@
 # include <stdio.h>
 #include <input.h>
 #include <color.h>
-#include <ctype.h>
 
-/**** Declare functions ****/
-char getGender();
-char* getGender1();
+#include <course_recommendation.h>
+#include <skill.h>
+#include <user.h>
+#include <passion.h>
+#include <string.h>
+#include <stdlib.h>
 
-
-
-char* getUserData() {
-    // Prompt user for name
-    char *user_name = getString("Enter Your Name");
-
-    // Print success message with user's name
-    printf("%sYou entered your name : %s%s\n\n", SUCCESS, user_name, RESET);
-
-    int user_age;
-
-    // Loop until a valid age is entered
-    while (1) {
-        // Prompt user for age
-        user_age = getInteger("Enter Your Age");
-
-        // Check if age is within valid range
-        if (40 >= user_age && user_age >= 10) {
-            // Print success message with user's age
-            printf("%sYou entered your age : %d%s\n\n", SUCCESS, user_age, RESET);
-            break;
-        }else {
-            printf("%s Invalid age please enter an age between 10 and 40  %s\n\n", ERROR, RESET);
+char* getName();
+char* getGender();
+int getAge();
+char *getEducationLevel();
+void displayUserData(UserData *userData);
 
 
+// Get user data
+void getUserData(UserData *userData) {
+
+    // Initialize userData to avoid undefined behavior
+    userData->name = NULL;
+    userData->age = 0;
+    userData->gender = NULL;
+    userData->educationLevel = NULL;
+    userData->passion = NULL;
+    userData->skills.skillCount = 0;
+    memset(userData->skills.skills, 0, sizeof(userData->skills.skills));
+
+    // Get user data
+    displayUserData(userData);
+    userData -> name = getName();
+    system("cls");
+    displayUserData(userData);
+    userData -> age =  getAge();
+    system("cls");
+    displayUserData(userData);
+    userData -> gender = getGender();
+    system("cls");
+    displayUserData(userData);
+    userData -> educationLevel = getEducationLevel();
+    system("cls");
+    displayUserData(userData);
+    userData -> passion = getPassion();
+    system("cls");
+    displayUserData(userData);
+    userData -> skills = *getSkill();
+    system("cls");
+    displayUserData(userData);
+}
+
+// update user data in to the display
+void displayUserData(UserData *userData) {
+    printf("%sFILL THE FORM%s\n\n", INFO, RESET);
+
+    // name
+    if (userData -> name == NULL) {
+        printf("Name:\t\t %s\n", "_____________");
+    }else {
+        printf("Name:\t\t %s\n", userData -> name);
+    }
+
+    // age
+    if (userData -> age == 0) {
+        printf("Age:\t\t %s\n", "_____________");
+    }else {
+        printf("Age:\t\t %d\n", userData -> age);
+    }
+
+    // gender
+    if (userData -> gender == NULL) {
+        printf("Gender:\t\t %s\n", "_____________");
+    }else {
+        printf("Gender:\t\t %s\n", userData -> gender);
+    }
+
+    // education level
+    if (userData -> educationLevel == NULL) {
+        printf("Education Level: %s\n", "_____________");
+    }else {
+        printf("Education Level: %s\n", userData -> educationLevel);
+    }
+    // passion
+    if (userData -> passion == NULL) {
+        printf("Passion:\t %s\n", "_____________");
+    }else {
+        printf("Passion:\t %s\n", userData -> passion);
+    }
+
+    // skill
+    printf("%sYour skill list: %s", RESET, RESET);
+    printf("%s Skill\t\t\t\tLevel%s\n",INFO, RESET);
+
+    if (userData -> skills . skillCount <= 0) {
+        for (int j = 1; j <= 2; j++) {
+            printf("\t\t%d.%s\t\t\t\t%s\n", j, "____", "____");
+        }
+    } else {
+        for (int i = 0; i < userData -> skills . skillCount; i++) {
+            char skillName[256];
+            char skillLevel[20];
+            strcpy(skillName, userData -> skills.skills[i].skillName);
+            strcpy(skillLevel, userData -> skills.skills[i].level);
+
+
+            printf("\t\t%d.%s\t\t\t\t%s\n", i + 1, skillName, skillLevel);
         }
     }
-
-    /******   call getGender function ******/
-    char gender = getGender();
-    printf("%sYou entered your gender : %c%s\n\n", SUCCESS, gender, RESET);
-
-    char* gender1 = getGender1();
-    printf("%sYou entered your gender : %s%s\n\n", SUCCESS, gender1, RESET);
-
+    printf("\n%sPlease enter your details here:%s\n\n", INFO, RESET);
 }
 
-/* problem is you not call getGender function */
-char getGender() {
-    char gender;
+// Get age from user
+int getAge() {
+    int age;
+    while (1) {
+        // Prompt user for age
+        age = getInteger("Enter Your Age");
 
-    printf("Enter your gender (Male=M Female=F Other=O): ");
-    scanf(" %c", &gender);
-
-    while (gender != 'M' && gender != 'F' && gender != 'O') {
-        printf("Invalid input. Please enter M (Male), F (Female), or O (Other): ");
-        scanf(" %c", &gender);
+        // Check if age is within valid range
+        if (80 >= age && age >= 10) {
+            // Print success message with user's age
+            printf("%sYou entered your age : %d%s\n\n", SUCCESS, age, RESET);
+            break;
+        }else {
+            printf("%s Invalid age please enter an age between 10 and 80  %s\n\n", ERROR, RESET);
+        }
     }
-
-    return gender;
+    return age;
 }
 
-/********* you can use it like this **********/
-char* getGender1() {
+// Get name from user
+char* getName() {
+    char *name;
+    name = getString("Enter Your Name");
+    return name;
+}
+
+// Get gender from user
+char* getGender() {
     char* options[] = {
-        "Male",
-        "Female",
-        "Other"
+            "Male",
+            "Female"
     };
-    int numOfOptions = 3;
-    char* choice = getChoice(options, numOfOptions, "Select your gender");
+    int numOptions = 2;
+    char* choice = getChoice(options, numOptions, "Select your gender");
+    return choice;
+}
+
+// Get education level from user
+char *getEducationLevel() {
+    char* options[] = {
+            "O/L",
+            "A/L",
+            "Bachelor",
+            "Master",
+            "PHD"
+    };
+    int numOptions = sizeof(options) / sizeof(options[0]);
+    char* choice = getChoice(options, numOptions, "Select your highest education level");
 
     return choice;
 }
+
+
+
+
 
 
 

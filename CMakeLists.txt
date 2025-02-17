@@ -31,12 +31,15 @@ add_executable(plf main.c
         src/header/course_recommendation.h
         src/output/output.c
         src/header/output.h
-        src/input/courses.c
-        src/header/courses.c.h
-        src/db_handle/inseart.c
+        src/header/courses.h
         src/header/inseart.h
         src/db_handle/retrieve.c
         src/header/retrieve.h
+        src/db_handle/fake_data.c
+        src/header/fake_data.h
+        src/header/main.h
+        src/filehandel/errrorlog.c
+        src/header/errrorlog.h
 )
 
 # Add SQLite library path
